@@ -4,12 +4,18 @@
   
   
   <entry>
-    <title>111111</title>
+    <title>关于IDEA的mysql驱动文件下载失败的解决办法（来自以前的csdn）</title>
     <link href="/2024/11/12/111111/"/>
     <url>/2024/11/12/111111/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<p>第一步，在官网上找到如图</p><p> <img src="/img/articles/1.png"> </p><p> 第二步 </p><p><img src="/img/articles/2.png"></p><p><img src="/img/articles/3.png"></p><p> 第三步</p><p>将下载好的驱动文件先解压然后再复制到安装IDEA的文件目录下面</p><p>最后，再回去IDEA点击驱动的下载</p><p>成功如图</p><p><img src="/img/articles/4.png"></p>]]></content>
     
+    
+    <categories>
+      
+      <category>配置各类环境所遇问题</category>
+      
+    </categories>
     
     
   </entry>
