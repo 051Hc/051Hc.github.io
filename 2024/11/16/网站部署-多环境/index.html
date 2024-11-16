@@ -19,24 +19,25 @@
   <meta name="author" content="黄浩森">
   <meta name="keywords" content="">
   
-    <meta name="description" content="这是第一篇文章">
+    <meta name="description" content="一：多环境概念：是指根据项目的不同阶段和需求，将项目部署在不同的环境中，以确保各环境之间相互独立且互不影响。多环境设计的主要目的是为了在不同的开发、测试和部署阶段中，确保项目的稳定性和可靠性。 省流：根据实际需要，对项目阶段进行部署，相互独立且互相不影响。多环境的分类： 本地环境(自己的电脑）localhost（熟悉的localhost） 开发环境：公司连同一台机器，方便开发 测试环境：性能测试&amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2024/11/11/hello-world/index.html">
-<meta property="og:site_name" content="website">
-<meta property="og:description" content="这是第一篇文章">
+<meta property="og:title" content="多环境概念理解">
+<meta property="og:url" content="http://hrseno.cn/2024/11/16/%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2-%E5%A4%9A%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:site_name" content="Website">
+<meta property="og:description" content="一：多环境概念：是指根据项目的不同阶段和需求，将项目部署在不同的环境中，以确保各环境之间相互独立且互不影响。多环境设计的主要目的是为了在不同的开发、测试和部署阶段中，确保项目的稳定性和可靠性。 省流：根据实际需要，对项目阶段进行部署，相互独立且互相不影响。多环境的分类： 本地环境(自己的电脑）localhost（熟悉的localhost） 开发环境：公司连同一台机器，方便开发 测试环境：性能测试&amp;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-11-11T02:29:06.731Z">
-<meta property="article:modified_time" content="2024-11-11T13:20:13.580Z">
+<meta property="og:image" content="http://hrseno.cn/img/articles/6.png">
+<meta property="article:published_time" content="2024-11-16T04:00:29.095Z">
+<meta property="article:modified_time" content="2024-11-16T06:13:03.504Z">
 <meta property="article:author" content="黄浩森">
-<meta property="article:tag" content="测试">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://hrseno.cn/img/articles/6.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Hello World - website</title>
+  <title>多环境概念理解 - Website</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -74,7 +75,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"hrseno.cn","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -202,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hello World"></span>
+            <span id="subtitle" data-typed-text="多环境概念理解"></span>
           
         </div>
 
@@ -213,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-11 10:29" pubdate>
-          2024年11月11日 上午
+        <time datetime="2024-11-16 12:00" pubdate>
+          2024年11月16日 中午
         </time>
       </span>
     
@@ -225,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7 字
+          921 字
         
       </span>
     
@@ -236,7 +237,7 @@
         
         
         
-          1 分钟
+          10 分钟
         
       </span>
     
@@ -273,12 +274,43 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Hello World</h1>
+            <h1 id="seo-header">多环境概念理解</h1>
             
             
               <div class="markdown-body">
                 
-                <p>这是第一篇文章</p>
+                <h3 id="一：多环境概念："><a href="#一：多环境概念：" class="headerlink" title="一：多环境概念："></a>一：多环境概念：</h3><p>是指根据项目的不同阶段和需求，将项目部署在不同的环境中，以确保各环境之间相互独立且互不影响。多环境设计的主要目的是为了在不同的开发、测试和部署阶段中，确保项目的稳定性和可靠性。</p>
+<h4 id="省流：根据实际需要，对项目阶段进行部署，相互独立且互相不影响。"><a href="#省流：根据实际需要，对项目阶段进行部署，相互独立且互相不影响。" class="headerlink" title="省流：根据实际需要，对项目阶段进行部署，相互独立且互相不影响。"></a>省流：<strong>根据实际需要，对项目阶段进行部署，相互独立且互相不影响。</strong></h4><h5 id="多环境的分类："><a href="#多环境的分类：" class="headerlink" title="多环境的分类："></a>多环境的分类：</h5><ol>
+<li>本地环境(自己的电脑）localhost（熟悉的localhost）</li>
+<li>开发环境：公司连同一台机器，方便开发</li>
+<li>测试环境：性能测试&#x2F;功能测试&#x2F;系统集成测试</li>
+<li>预发布环境（体验服）：用正式服的数据再进行测试</li>
+<li>正式环境（线上，公开访问的项目）</li>
+<li>沙箱环境：目的就是为了做实验（做完就销毁）</li>
+</ol>
+<h3 id="二：前端配置多环境："><a href="#二：前端配置多环境：" class="headerlink" title="二：前端配置多环境："></a>二：前端配置多环境：</h3><h5 id="1：请求地址："><a href="#1：请求地址：" class="headerlink" title="1：请求地址："></a>1：请求地址：</h5><ul>
+<li>开发环境：localhost:8000</li>
+<li>线上环境：域名或者公网ip</li>
+</ul>
+<p><strong>2：启动方式：</strong>（本人习惯使用npm）<br>npm run start </p>
+<p>通常用于启动开发服务器或者应用程序的开发模式。这个命令一般会启动一个开发服务器，监听文件变化并自动重新加载应用，以方便开发人员在开发过程中进行实时调试。这个命令通常用于开发阶段，不会对代码进行优化和压缩，以便开发人员能够方便地调试和查看代码变化。</p>
+<p>npm run build </p>
+<p>通常用于构建生产环境下的部署包。这个命令会对项目代码进行优化、压缩和打包，以减小文件大小并提高运行效率。通常会生成用于部署的静态文件，准备好被部署到生产服务器上。这个命令一般在项目准备发布时执行，以确保发布的代码是经过优化和压缩的<br><strong>3：项目的配置：</strong></p>
+<p> 不同的项目（框架）都有不同的配置文件，可以在配置文件后添加对应的环境名称后缀来区分开发环境和生产环境。</p>
+<p>以vue项目举例，<code>NODE_ENV</code>环境变量通常用于指示当前的环境，是否为开发环境或生产环境。在开发环境中，通常会设置<code>NODE_ENV</code>为<code>development</code>，而在生产环境中设置为<code>production</code>。</p>
+<p>build 时会自动传入 NODE_ENV &#x3D;&#x3D; production 参数</p>
+<p>所以我们的思路是什么呢</p>
+<p>我们可以在前端的拦截器上加一个判断条件，如果NODE_ENV是等于这个production的，我们就转到我们想要转的地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs vue">const isDev = process.env.NODE_ENV === &#x27;development&#x27;;<br>const Service = axios.create(&#123;<br>    baseURL: isDev ? &#x27;http://localhost:8089/&#x27; : &#x27;http://公网ip或者域名&#x27;,<br>    withCredentials: true,<br>&#125;);<br>Service.defaults.withCredentials = true;<br></code></pre></td></tr></table></figure>
+
+<p>一般上线的话，需要运行<strong>build 进行打包构建，然后生成一个dist文件</strong></p>
+<p>随后，可以在项目终端使用 serve 工具启动（npm i -g serve，先安装），浏览打包好了的文件 </p>
+<h3 id="三：后端配置多环境："><a href="#三：后端配置多环境：" class="headerlink" title="三：后端配置多环境："></a>三：后端配置多环境：</h3><h5 id="后端和前端一样都需要配置文件："><a href="#后端和前端一样都需要配置文件：" class="headerlink" title="后端和前端一样都需要配置文件："></a>后端和前端一样都需要配置文件：</h5><p>SpringBoot 项目，通过 application.yml 添加不同的后缀来区分配置文件(如application-prod.yml作为线上配置 )</p>
+<h5 id="然后我们运行maven中的package，对项目进行打包"><a href="#然后我们运行maven中的package，对项目进行打包" class="headerlink" title="然后我们运行maven中的package，对项目进行打包"></a>然后我们运行maven中的package，对项目进行打包</h5><p>另外，如果单元测试不重要，我们就可以点击跳过测试模式这个按钮。</p>
+<p> 打包完之后，我们在这个打包出来的文件夹（target）的终端中输入</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">java -jar .\backend-<span class="hljs-number">0.0</span><span class="hljs-number">.1</span>-SNAPSHOT.jar --spring.profiles.active=prod<br></code></pre></td></tr></table></figure>
+
+<p>那一行代码的意思就是往里传了一个环境参数，运行后就会切换到线上配置</p>
 
                 
               </div>
@@ -287,13 +319,27 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
   
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/%E6%B5%8B%E8%AF%95/" class="print-no-link">#测试</a>
-      
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2/" class="category-chain-item">网站部署</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
     </div>
+  
   
 </div>
 
@@ -303,8 +349,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hello World</div>
-      <div>http://example.com/2024/11/11/hello-world/</div>
+      <div>多环境概念理解</div>
+      <div>http://hrseno.cn/2024/11/16/网站部署-多环境/</div>
     </div>
     <div class="license-meta">
       
@@ -316,7 +362,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年11月11日</div>
+          <div>2024年11月16日</div>
         </div>
       
       
@@ -348,15 +394,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/11/11/hello-world%20-%20%E5%89%AF%E6%9C%AC/" title="Hello World2">
+                      <a href="/2024/11/16/AI%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A5%E5%85%A51/" title="后端接入讯飞星火API">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Hello World2</span>
+                        <span class="hidden-mobile">后端接入讯飞星火API</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2024/11/12/%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%981/" title="关于IDEA的mysql驱动文件下载失败的解决办法（来自以前的csdn）">
+                        <span class="hidden-mobile">关于IDEA的mysql驱动文件下载失败的解决办法（来自以前的csdn）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

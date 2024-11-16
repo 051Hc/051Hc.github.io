@@ -19,25 +19,25 @@
   <meta name="author" content="黄浩森">
   <meta name="keywords" content="">
   
-    <meta name="description" content="第一步，在官网上找到如图     第二步     第三步 将下载好的驱动文件先解压然后再复制到安装IDEA的文件目录下面 最后，再回去IDEA点击驱动的下载 成功如图">
+    <meta name="description" content="团队项目有一个业务要获取阿里云物联网平台上面的传感器数据，代码使用java，采用springboot框架，阿里云物联网平台上一个产品下的一个设备只能连接真实设备或者代码服务端，于是我采用数据流转的方式将数据流转到一个设备中，服务端订阅该设备的Topic。 阿里云创建首先创建一个产品，用于测试使用，直接选择一个标准品类，品类有温度和湿度属性（实际使用需要按需求自定义产品），节点类型为了方便选的直连设">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于IDEA的mysql驱动文件下载失败的解决办法（来自以前的csdn）">
-<meta property="og:url" content="http://example.com/2024/11/12/111111/index.html">
-<meta property="og:site_name" content="website">
-<meta property="og:description" content="第一步，在官网上找到如图     第二步     第三步 将下载好的驱动文件先解压然后再复制到安装IDEA的文件目录下面 最后，再回去IDEA点击驱动的下载 成功如图">
+<meta property="og:title" content="实战后端接入物联网API">
+<meta property="og:url" content="http://hrseno.cn/2024/11/16/%E7%89%A9%E8%81%94%E7%BD%91API%E6%8E%A5%E5%85%A5%E5%90%8E%E7%AB%AF/index.html">
+<meta property="og:site_name" content="Website">
+<meta property="og:description" content="团队项目有一个业务要获取阿里云物联网平台上面的传感器数据，代码使用java，采用springboot框架，阿里云物联网平台上一个产品下的一个设备只能连接真实设备或者代码服务端，于是我采用数据流转的方式将数据流转到一个设备中，服务端订阅该设备的Topic。 阿里云创建首先创建一个产品，用于测试使用，直接选择一个标准品类，品类有温度和湿度属性（实际使用需要按需求自定义产品），节点类型为了方便选的直连设">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/bg.jpg">
-<meta property="article:published_time" content="2024-11-12T03:23:47.597Z">
-<meta property="article:modified_time" content="2024-11-12T14:19:02.749Z">
+<meta property="og:image" content="http://hrseno.cn/img/articles/7.png">
+<meta property="article:published_time" content="2024-11-16T06:19:24.356Z">
+<meta property="article:modified_time" content="2024-11-16T06:33:33.522Z">
 <meta property="article:author" content="黄浩森">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/bg.jpg">
+<meta name="twitter:image" content="http://hrseno.cn/img/articles/7.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>关于IDEA的mysql驱动文件下载失败的解决办法（来自以前的csdn） - website</title>
+  <title>实战后端接入物联网API - Website</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -75,7 +75,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"hrseno.cn","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -203,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="关于IDEA的mysql驱动文件下载失败的解决办法（来自以前的csdn）"></span>
+            <span id="subtitle" data-typed-text="实战后端接入物联网API"></span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-12 11:23" pubdate>
-          2024年11月12日 上午
+        <time datetime="2024-11-16 14:19" pubdate>
+          2024年11月16日 下午
         </time>
       </span>
     
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          62 字
+          841 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          1 分钟
+          9 分钟
         
       </span>
     
@@ -274,21 +274,32 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">关于IDEA的mysql驱动文件下载失败的解决办法（来自以前的csdn）</h1>
+            <h1 id="seo-header">实战后端接入物联网API</h1>
             
             
               <div class="markdown-body">
                 
-                <p>第一步，在官网上找到如图</p>
-<p> <img src="/img/articles/1.png" srcset="/img/loading.gif" lazyload> </p>
-<p> 第二步 </p>
-<p><img src="/img/articles/2.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/img/articles/3.png" srcset="/img/loading.gif" lazyload></p>
-<p> 第三步</p>
-<p>将下载好的驱动文件先解压然后再复制到安装IDEA的文件目录下面</p>
-<p>最后，再回去IDEA点击驱动的下载</p>
-<p>成功如图</p>
-<p><img src="/img/articles/4.png" srcset="/img/loading.gif" lazyload></p>
+                <p>团队项目有一个业务要获取阿里云物联网平台上面的传感器数据，代码使用java，采用springboot框架，阿里云物联网平台上一个产品下的一个设备只能连接真实设备或者代码服务端，于是我采用数据流转的方式将数据流转到一个设备中，服务端订阅该设备的<strong>Topic</strong>。</p>
+<h2 id="阿里云创建"><a href="#阿里云创建" class="headerlink" title="阿里云创建"></a>阿里云创建</h2><p>首先创建一个产品，用于测试使用，直接选择一个标准品类，品类有温度和湿度属性（实际使用需要按需求自定义产品），节点类型为了方便选的直连设备。</p>
+<p>产品创建完成之后点击<strong>查看</strong>，点击<strong>功能定义</strong>模块，编辑草稿，添加刚才选择的标准产品的两个标准功能，也可以添加自定义功能看自己选择，这边只使用温度和湿度。</p>
+<p>发布完成之后进入Topic 类列表的自定义Topic 部分</p>
+<p>定义一个Topic类，便于后面通过该Topic流转到服务器端，操作权限为发布和订阅，命名为tento(按照自己需求命名)，点击确认就定义完成了。</p>
+<p>之后为这个产品添加两个设备（一个真实设备，一个服务器设备），实际使用可以创建多个真实设备，数据流转到一个服务器设备中就可以了，为了方便这边只创建两个设备测试。直接添加，DeviceName让他随机生成。</p>
+<p>创建一个解析器</p>
+<p>点击查看这个数据源，添加Topic，因为我要获取真实设备的数据，所以选择物模型数据上报的Topic，设备DeviceName选择刚才创建的真实设备，最后选择post。这样数据源就完成了</p>
+<p>然后进入数据目的，点击关联数据目的</p>
+<p>和刚才操作类似点击关联数据目的—-&gt;创建数据目的，产品选择我们一开始创建的产品，操作为发送到另一个Topic。</p>
+<p>最后是解析器脚本，会有一个草稿，脚本中的writeIotTopic(1004），<strong>1004是自动生成的，自己的代码不要改这个</strong></p>
+<p>改为</p>
+<p>只更改了&#x2F;k1a8gKQzYMD&#x2F;ejP0IrtXk49UIMz7Wsn1&#x2F;user&#x2F;tento是刚才咱们自定义的Topic，k1a8gKQzYMD为产品的ProductKey，ejP0IrtXk49UIMz7Wsn1为服务端设备的DeviceName，点击发布就完成了这个解析器，解析器一定要点击启动才会生效。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>开两个设备模拟器</p>
+<p>真实设备端</p>
+<p>服务器端</p>
+<p>服务器端订阅刚才自定义的Topic</p>
+<p>点击订阅之后，右边日志会显示订阅的Topic <strong>(订阅这一步不能省)</strong></p>
+<p>再回到真实设备的模拟器（<strong>服务器模拟器不要关</strong>，<strong>开两个网页</strong>），输入温度湿度数据之后，点击提交，模拟真实设备提交数据。</p>
+<p>真实设备提交数据之后，刚才服务器设备的模拟器订阅了这个消息，就会收到消息。</p>
+<p>消息中包括刚才真实设备上传的温度湿度，还包括真实设备的deviceName，这样如果多个真实设备上传数据，全部流转到服务器端，服务器端就是知道真实设备是哪一个，上传的数据是多少。</p>
 
                 
               </div>
@@ -307,7 +318,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E9%85%8D%E7%BD%AE%E5%90%84%E7%B1%BB%E7%8E%AF%E5%A2%83%E6%89%80%E9%81%87%E9%97%AE%E9%A2%98/" class="category-chain-item">配置各类环境所遇问题</a>
+  <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91API%E6%8E%A5%E5%85%A5/" class="category-chain-item">物联网API接入</a>
   
   
 
@@ -327,8 +338,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>关于IDEA的mysql驱动文件下载失败的解决办法（来自以前的csdn）</div>
-      <div>http://example.com/2024/11/12/111111/</div>
+      <div>实战后端接入物联网API</div>
+      <div>http://hrseno.cn/2024/11/16/物联网API接入后端/</div>
     </div>
     <div class="license-meta">
       
@@ -340,7 +351,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年11月12日</div>
+          <div>2024年11月16日</div>
         </div>
       
       
@@ -376,8 +387,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/11/12/%E6%96%87%E7%AB%A02/" title="解答">
-                        <span class="hidden-mobile">解答</span>
+                      <a href="/2024/11/16/AI%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A5%E5%85%A51/" title="后端接入讯飞星火API">
+                        <span class="hidden-mobile">后端接入讯飞星火API</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
