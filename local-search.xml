@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>Linux服务器JDK安装和环境变量配置</title>
+    <link href="/2024/12/07/%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2-JDK%E5%AE%89%E8%A3%85/"/>
+    <url>/2024/12/07/%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2-JDK%E5%AE%89%E8%A3%85/</url>
+    
+    <content type="html"><![CDATA[<p><strong>1.安装JDK</strong>：</p><ul><li><p>对于CentOS，使用如下命令：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">sudo yum install java-1.8.0-openjdk-devel<br></code></pre></td></tr></table></figure></li><li><p>这将安装OpenJDK 8，包括<code>javac</code>编译器。</p></li></ul><p><strong>2.配置环境变量</strong>：</p><ul><li><p>安装完成后，需要配置JAVA_HOME环境变量,可以通过查找java命令的路径来确定JDK的安装位置：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">sudo update-alternatives --config java<br></code></pre></td></tr></table></figure></li></ul><p>​      如下图示例：</p><p><img src="/img/articles/13.png"> </p><ul><li><p>使用文本编辑器打开<code>.bashrc</code>文件，例如使用<code>vi</code>（按i开启编辑，Esc+:wq保存+Enter退出）</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">vi ~/.bashrc<br></code></pre></td></tr></table></figure></li></ul><p>​       添加以下行到文件中：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-1.el7_9.x86_64<br>export PATH=$PATH:$JAVA_HOME/bin<br></code></pre></td></tr></table></figure><p>​      如下图示例：</p><p><img src="/img/articles/14.png"> </p><p>​     使更改生效，运行：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">source ~/.bashrc<br></code></pre></td></tr></table></figure><p><strong>3.验证环境变量</strong>：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">echo $JAVA_HOME<br>echo $PATH<br></code></pre></td></tr></table></figure><p><strong>4.测试<code>javac</code>命令</strong></p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">javac -version<br></code></pre></td></tr></table></figure><p><strong>配置成功如下图</strong>：</p><p><img src="/img/articles/15.png"> </p>]]></content>
+    
+    
+    <categories>
+      
+      <category>网站部署</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>UML课设</title>
     <link href="/2024/11/17/UML%E8%AF%BE%E8%AE%BE/"/>
     <url>/2024/11/17/UML%E8%AF%BE%E8%AE%BE/</url>
