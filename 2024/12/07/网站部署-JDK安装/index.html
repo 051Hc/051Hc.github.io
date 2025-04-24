@@ -22,22 +22,22 @@
     <meta name="description" content="1.安装JDK：  对于CentOS，使用如下命令： 1sudo yum install java-1.8.0-openjdk-devel  这将安装OpenJDK 8，包括javac编译器。   2.配置环境变量：  安装完成后，需要配置JAVA_HOME环境变量,可以通过查找java命令的路径来确定JDK的安装位置： 1sudo update-alternatives --config jav">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux服务器JDK安装和环境变量配置">
-<meta property="og:url" content="http://hrseno.cn/2024/12/07/%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2-JDK%E5%AE%89%E8%A3%85/index.html">
-<meta property="og:site_name" content="Website">
+<meta property="og:url" content="http://blog.hrseno.cn/2024/12/07/%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2-JDK%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:site_name" content="Horsen&#39;s Blog">
 <meta property="og:description" content="1.安装JDK：  对于CentOS，使用如下命令： 1sudo yum install java-1.8.0-openjdk-devel  这将安装OpenJDK 8，包括javac编译器。   2.配置环境变量：  安装完成后，需要配置JAVA_HOME环境变量,可以通过查找java命令的路径来确定JDK的安装位置： 1sudo update-alternatives --config jav">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://hrseno.cn/img/articles/12.png">
+<meta property="og:image" content="http://blog.hrseno.cn/img/articles/12.png">
 <meta property="article:published_time" content="2024-12-07T10:33:44.773Z">
 <meta property="article:modified_time" content="2025-01-20T14:37:20.693Z">
 <meta property="article:author" content="黄浩森">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://hrseno.cn/img/articles/12.png">
+<meta name="twitter:image" content="http://blog.hrseno.cn/img/articles/12.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Linux服务器JDK安装和环境变量配置 - Website</title>
+  <title>Linux服务器JDK安装和环境变量配置 - Horsen&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -75,7 +75,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"hrseno.cn","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"blog.hrseno.cn","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -101,7 +101,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Website</strong>
+      <strong>Horsen&#39;s Blog</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -358,7 +358,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Linux服务器JDK安装和环境变量配置</div>
-      <div>http://hrseno.cn/2024/12/07/网站部署-JDK安装/</div>
+      <div>http://blog.hrseno.cn/2024/12/07/网站部署-JDK安装/</div>
     </div>
     <div class="license-meta">
       
@@ -402,9 +402,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/29/%E5%AE%89%E5%8D%93%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%A1%8C%E9%80%9A%E7%94%A8%E9%85%8D%E7%BD%AE/" title="运行安卓项目通用配置（java）">
+                      <a href="/2024/12/10/MyBatis-Plus%E7%9A%84%E4%BD%BF%E7%94%A8/" title="MyBatis-Plus的使用">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">运行安卓项目通用配置（java）</span>
+                        <span class="hidden-mobile">MyBatis-Plus的使用</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -547,7 +547,7 @@
     <div class="footer-inner">
   
     <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Horsen</span></a> <i class="iconfont icon-love"></i> 
+       <span>Horsen</span> <i class="iconfont icon-love"></i> <span>&copy; 2025</span> 
     </div>
   
   

@@ -1,0 +1,1366 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/common/icon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="黄浩森">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一.Redis 入门1. 初识 RedisRedis 是一种键值型的 NoSql 数据库。  键值型：是指 Redis 中存储的数据都是以 key、value 对的形式存储，而 value 的形式多种多样，可以是字符串、数值、甚至 json   1.1 认识 NoSQL1.1.1 什么是 NoSQL  NoSQL 最常见的解释是”non-relational“， 很多人也说它是”***Not On">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 基础实战">
+<meta property="og:url" content="http://blog.hrseno.cn/2024/12/20/Redis-Redis%20%E5%9F%BA%E7%A1%80%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:site_name" content="Horsen&#39;s Blog">
+<meta property="og:description" content="一.Redis 入门1. 初识 RedisRedis 是一种键值型的 NoSql 数据库。  键值型：是指 Redis 中存储的数据都是以 key、value 对的形式存储，而 value 的形式多种多样，可以是字符串、数值、甚至 json   1.1 认识 NoSQL1.1.1 什么是 NoSQL  NoSQL 最常见的解释是”non-relational“， 很多人也说它是”***Not On">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.hrseno.cn/img/articles/26.png">
+<meta property="article:published_time" content="2024-12-20T05:50:00.000Z">
+<meta property="article:modified_time" content="2025-04-24T14:53:00.350Z">
+<meta property="article:author" content="黄浩森">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://blog.hrseno.cn/img/articles/26.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Redis 基础实战 - Horsen&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.hrseno.cn","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Horsen&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Redis 基础实战"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-20 13:50" pubdate>
+          2024年12月20日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          75 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Redis 基础实战</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一-Redis-入门"><a href="#一-Redis-入门" class="headerlink" title="一.Redis 入门"></a>一.Redis 入门</h1><h1 id="1-初识-Redis"><a href="#1-初识-Redis" class="headerlink" title="1. 初识 Redis"></a>1. 初识 Redis</h1><p>Redis 是一种<strong>键值型</strong>的 <strong>NoSql</strong> 数据库。</p>
+<blockquote>
+<p><strong>键值型</strong>：是指 Redis 中存储的数据都是<strong>以 key、value 对的形式存储</strong>，而 value 的形式多种多样，可以是字符串、数值、甚至 json</p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/6U1Rhxo.png#crop=0&crop=0&crop=1&crop=1&id=dJPXr&originHeight=468&originWidth=1112&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/6U1Rhxo.png#crop=0&crop=0&crop=1&crop=1&id=dJPXr&originHeight=468&originWidth=1112&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+</blockquote>
+<h2 id="1-1-认识-NoSQL"><a href="#1-1-认识-NoSQL" class="headerlink" title="1.1 认识 NoSQL"></a>1.1 认识 NoSQL</h2><h3 id="1-1-1-什么是-NoSQL"><a href="#1-1-1-什么是-NoSQL" class="headerlink" title="1.1.1 什么是 NoSQL"></a>1.1.1 什么是 NoSQL</h3><hr>
+<ul>
+<li>NoSQL 最常见的解释是”<code>non-relational</code>“， 很多人也说它是”***Not Only SQL***“</li>
+<li>NoSQL 仅仅是一个概念，泛指<strong>非关系型的数据库</strong></li>
+<li>区别于关系数据库，它们不保证关系数据的 ACID 特性</li>
+<li>NoSQL 是一项全新的数据库革命性运动，提倡运用非关系型的数据存储，相对于铺天盖地的关系型数据库运用，这一概念无疑是一种全新的思维的注入</li>
+<li>常见的 NoSQL 数据库有：<code>Redis</code>、<code>MemCache</code>、<code>MongoDB</code> 等</li>
+</ul>
+<h3 id="1-1-2-NoSQL-与-SQL-的差异"><a href="#1-1-2-NoSQL-与-SQL-的差异" class="headerlink" title="1.1.2 NoSQL 与 SQL 的差异"></a>1.1.2 NoSQL 与 SQL 的差异</h3><hr>
+<p>| | SQL | NoSQL |<br>| ——– | ————— | ————————————— | ————————— |<br>| 数据结构 | 结构化 | 非结构化 |<br>| 数据关联 | 关联的 | 无关联的 |<br>| 查询方式 | SQL 查询 | 非 SQL |<br>| 事务特性 | ACID | BASE |<br>| 存储方式 | 磁盘 | 内存 |<br>| 扩展性 | 垂直 | 水平 |<br>| 使用场景 | 1）数据结构固定 | 1）数据结构不固定 |<br>| | | 2）相关业务对数据安全性、一致性要求较高 | 2）对一致性、安全性要求不高 |<br>| | | 3）对性能要求 |</p>
+<h1 id="2-Redis-常见命令"><a href="#2-Redis-常见命令" class="headerlink" title="2.Redis 常见命令"></a>2.Redis 常见命令</h1><blockquote>
+<p>我们可以通过 Redis 的中文文档：<a target="_blank" rel="noopener" href="http://www.redis.cn/commands.html%EF%BC%8C%E6%9D%A5%E5%AD%A6%E4%B9%A0%E5%90%84%E7%A7%8D%E5%91%BD%E4%BB%A4%E3%80%82">http://www.redis.cn/commands.html，来学习各种命令。</a></p>
+<p>也可以通过菜鸟教程官网来学习：<a target="_blank" rel="noopener" href="https://www.runoob.com/redis/redis-keys.html">https://www.runoob.com/redis/redis-keys.html</a></p>
+</blockquote>
+<h2 id="2-1-Redis-数据类型"><a href="#2-1-Redis-数据类型" class="headerlink" title="2.1 Redis 数据类型"></a>2.1 Redis 数据类型</h2><blockquote>
+<p>Redis 是一种 key-value 数据库，一般 key 都是 String，value 的类型五花八门。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/8tli2o9.png#crop=0&crop=0&crop=1&crop=1&id=ASqtX&originHeight=673&originWidth=1299&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/8tli2o9.png#crop=0&crop=0&crop=1&crop=1&id=ASqtX&originHeight=673&originWidth=1299&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<h2 id="2-2-Redis-基本命令"><a href="#2-2-Redis-基本命令" class="headerlink" title="2.2 Redis 基本命令"></a>2.2 Redis 基本命令</h2><blockquote>
+<p>通用指令是部分数据类型的，都可以使用的指令</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>KEYS</td>
+<td>查看符合模板的所有 key</td>
+</tr>
+<tr>
+<td>DEL</td>
+<td>删除一个指定的 key</td>
+</tr>
+<tr>
+<td>EXISTS</td>
+<td>判断 key 是否存在</td>
+</tr>
+<tr>
+<td>EXPIRE</td>
+<td>给一个 key 设置有效期，有效期到期时该 key 会被自动删除</td>
+</tr>
+<tr>
+<td>TTL</td>
+<td>查看一个 KEY 的剩余有效期</td>
+</tr>
+</tbody></table>
+<p><strong>通过 help [command] 可以查看一个命令的具体用法</strong></p>
+<h2 id="2-3-String-类型"><a href="#2-3-String-类型" class="headerlink" title="2.3 String 类型"></a>2.3 String 类型</h2><p>字符串类型，Redis 中最简单的存储类型。</p>
+<p>其 value 是字符串，但是根据字符串的格式不同，可以分为三类：</p>
+<ul>
+<li>string：普通字符串</li>
+<li>int：整数类型，可以做自增、自减操作。</li>
+<li>float：浮点类型，可以做自增、自减操作。</li>
+</ul>
+<p>不管是哪种格式，底层都是字节数组形式存储，只不过是编码方式不同。字符串类型的最大空间不能超过 512m.</p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/VZqpv73.png#crop=0&crop=0&crop=1&crop=1&id=N5h6p&originHeight=268&originWidth=1184&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/VZqpv73.png#crop=0&crop=0&crop=1&crop=1&id=N5h6p&originHeight=268&originWidth=1184&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<h3 id="2-3-1-String-类型常用命令"><a href="#2-3-1-String-类型常用命令" class="headerlink" title="2.3.1 String 类型常用命令"></a>2.3.1 String 类型常用命令</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SET</td>
+<td>添加或者修改已经存在的一个 String 类型的键值对</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>根据 key 获取 String 类型的 value</td>
+</tr>
+<tr>
+<td>MSET</td>
+<td>批量添加多个 String 类型的键值对</td>
+</tr>
+<tr>
+<td>MGET</td>
+<td>根据多个 key 获取多个 String 类型的 value</td>
+</tr>
+<tr>
+<td>INCR</td>
+<td>让一个整型的 key 自增 1</td>
+</tr>
+<tr>
+<td>INCRBY</td>
+<td>让一个整型的 key 自增并指定步长，例如：incrby num 2 让 num 值自增 2</td>
+</tr>
+<tr>
+<td>INCRBYFLOAT</td>
+<td>让一个浮点类型的数字自增并指定步长</td>
+</tr>
+<tr>
+<td><strong>SETNX</strong></td>
+<td>添加一个 String 类型的键值对，前提是这个 key 不存在，否则不执行</td>
+</tr>
+<tr>
+<td>SETEX</td>
+<td>添加一个 String 类型的键值对，并且指定有效期</td>
+</tr>
+</tbody></table>
+<h2 id="2-4-Hash-类型"><a href="#2-4-Hash-类型" class="headerlink" title="2.4 Hash 类型"></a>2.4 Hash 类型</h2><blockquote>
+<p><strong>Hash 类型，也叫散列，其 value 是一个无序字典，类似于 Java 中的</strong><code>**HashMap**</code><strong>结构。</strong></p>
+</blockquote>
+<ul>
+<li><p><strong>Hash 结构可以将对象中的每个字段独立存储，可以针对单个字段做 CRUD</strong><a target="_blank" rel="noopener" href="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525001227167.png#crop=0&crop=0&crop=1&crop=1&id=WqQ2c&originHeight=296&originWidth=693&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525001227167.png#crop=0&crop=0&crop=1&crop=1&id=WqQ2c&originHeight=296&originWidth=693&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+</li>
+<li><p>Hash 的常见命令有：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HSET key field value</td>
+<td>添加或者修改 hash 类型 key 的 field 的值</td>
+</tr>
+<tr>
+<td>HGET key field</td>
+<td>获取一个 hash 类型 key 的 field 的值</td>
+</tr>
+<tr>
+<td>HMSET</td>
+<td>hmset 和 hset 效果相同 ，4.0 之后 hmset 可以弃用了</td>
+</tr>
+<tr>
+<td>HMGET</td>
+<td>批量获取多个 hash 类型 key 的 field 的值</td>
+</tr>
+<tr>
+<td>HGETALL</td>
+<td>获取一个 hash 类型的 key 中的所有的 field 和 value</td>
+</tr>
+<tr>
+<td>HKEYS</td>
+<td>获取一个 hash 类型的 key 中的所有的 field</td>
+</tr>
+<tr>
+<td>HVALS</td>
+<td>获取一个 hash 类型的 key 中的所有的 value</td>
+</tr>
+<tr>
+<td>HINCRBY</td>
+<td>让一个 hash 类型 key 的字段值自增并指定步长</td>
+</tr>
+<tr>
+<td>HSETNX</td>
+<td>添加一个 hash 类型的 key 的 field 值，前提是这个 field 不存在，否则不执行</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h2 id="2-5-List-类型"><a href="#2-5-List-类型" class="headerlink" title="2.5 List 类型"></a>2.5 List 类型</h2><blockquote>
+<p><strong>Redis 中的 List 类型与 Java 中的 LinkedList 类似，可以看做是一个双向链表结构。既可以支持正向检索和也可以支持反向检索。</strong></p>
+</blockquote>
+<p><strong>特征也与</strong><code>**LinkedList**</code><strong>类似：</strong></p>
+<ul>
+<li>有序</li>
+<li>元素可以重复</li>
+<li>插入和删除快</li>
+<li>查询速度一般</li>
+</ul>
+<p>常用来存储一个有序数据，例如：朋友圈点赞列表，评论列表等.</p>
+<blockquote>
+<p><strong>List 的常见命令有</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LPUSH key  element …</td>
+<td>向列表左侧插入一个或多个元素</td>
+</tr>
+<tr>
+<td>LPOP key</td>
+<td>移除并返回列表左侧的第一个元素，没有则返回 nil</td>
+</tr>
+<tr>
+<td><strong>RPUSH key  element …</strong></td>
+<td>向列表右侧插入一个或多个元素</td>
+</tr>
+<tr>
+<td>RPOP key</td>
+<td>移除并返回列表右侧的第一个元素</td>
+</tr>
+<tr>
+<td>LRANGE key star end</td>
+<td>返回一段角标范围内的所有元素</td>
+</tr>
+<tr>
+<td>BLPOP 和 BRPOP</td>
+<td>与 LPOP 和 RPOP 类似，只不过在没有元素时等待指定时间，而不是直接返回 nil</td>
+</tr>
+</tbody></table>
+<h2 id="2-6-Set-类型"><a href="#2-6-Set-类型" class="headerlink" title="2.6 Set 类型"></a>2.6 Set 类型</h2><blockquote>
+<p><strong>Redis 的 Set 结构与 Java 中的 HashSet 类似，可以看做是一个 value 为 null 的 HashMap。因为也是一个 hash 表，因此具备与 HashSet 类似的特征</strong></p>
+</blockquote>
+<ul>
+<li>无序</li>
+<li>元素不可重复</li>
+<li>查找快</li>
+<li>支持交集、并集、差集等功能</li>
+</ul>
+<blockquote>
+<p><strong>Set 的常见命令有</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SADD key member …</td>
+<td>向 set 中添加一个或多个元素</td>
+</tr>
+<tr>
+<td>SREM key member …</td>
+<td>移除 set 中的指定元素</td>
+</tr>
+<tr>
+<td>SCARD key</td>
+<td>返回 set 中元素的个数</td>
+</tr>
+<tr>
+<td>SISMEMBER key member</td>
+<td>判断一个元素是否存在于 set 中</td>
+</tr>
+<tr>
+<td>SMEMBERS</td>
+<td>获取 set 中的所有元素</td>
+</tr>
+<tr>
+<td>SINTER key1 key2 …</td>
+<td>求 key1 与 key2 的交集</td>
+</tr>
+<tr>
+<td>SDIFF key1 key2 …</td>
+<td>求 key1 与 key2 的差集</td>
+</tr>
+<tr>
+<td>SUNION key1 key2 ..</td>
+<td>求 key1 和 key2 的并集</td>
+</tr>
+</tbody></table>
+<h2 id="2-7-SortedSet-zset-类型"><a href="#2-7-SortedSet-zset-类型" class="headerlink" title="2.7 SortedSet (zset) 类型"></a>2.7 SortedSet (zset) 类型</h2><blockquote>
+<p><strong>Redis 的 SortedSet 是一个可排序的 set 集合，与 Java 中的 TreeSet 有些类似，但底层数据结构却差别很大。SortedSet 中的每一个元素都带有一个 score 属性，可以基于 score 属性对元素排序，底层的实现是一个跳表（SkipList）加 hash 表。</strong></p>
+</blockquote>
+<p><strong>SortedSet 具备下列特性：</strong></p>
+<ul>
+<li>可排序</li>
+<li>元素不重复</li>
+<li>查询速度快</li>
+</ul>
+<p>因为 SortedSet 的可排序特性，经常被用来实现排行榜这样的功能。</p>
+<blockquote>
+<p><strong>SortedSet 的常见命令有</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ZADD key score member</td>
+<td>添加一个或多个元素到 sorted set ，如果已经存在则更新其 score 值</td>
+</tr>
+<tr>
+<td>ZREM key member</td>
+<td>删除 sorted set 中的一个指定元素</td>
+</tr>
+<tr>
+<td>ZSCORE key member</td>
+<td>获取 sorted set 中的指定元素的 score 值</td>
+</tr>
+<tr>
+<td>ZRANK key member</td>
+<td>获取 sorted set 中的指定元素的排名</td>
+</tr>
+<tr>
+<td>ZCARD key</td>
+<td>获取 sorted set 中的元素个数</td>
+</tr>
+<tr>
+<td>ZCOUNT key min max</td>
+<td>统计 score 值在给定范围内的所有元素的个数</td>
+</tr>
+<tr>
+<td>ZINCRBY key increment member</td>
+<td>让 sorted set 中的指定元素自增，步长为指定的 increment 值</td>
+</tr>
+<tr>
+<td>ZRANGE key min max</td>
+<td>按照 score 排序后，获取指定排名范围内的元素</td>
+</tr>
+<tr>
+<td>ZRANGEBYSCORE key min max</td>
+<td>按照 score 排序后，获取指定 score 范围内的元素</td>
+</tr>
+<tr>
+<td>ZDIFF、ZINTER、ZUNION</td>
+<td>求差集、交集、并集</td>
+</tr>
+</tbody></table>
+<p><strong>注意：所有的排名默认都是升序，如果要降序则在命令的 Z 后面添加</strong><code>**REV**</code><strong>即可</strong></p>
+<blockquote>
+<p><strong>跳跃表</strong></p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/image-20220725164212963.png#crop=0&crop=0&crop=1&crop=1&id=YPvjN&originHeight=254&originWidth=865&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/image-20220725164212963.png#crop=0&crop=0&crop=1&crop=1&id=YPvjN&originHeight=254&originWidth=865&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<p>从第 2 层开始，1 节点比 51 节点小，向后比较。</p>
+<p>21 节点比 51 节点小，继续向后比较，后面就是 NULL 了，所以从 21 节点向下到第 1 层</p>
+<p>在第 1 层，41 节点比 51 节点小，继续向后，61 节点比 51 节点大，所以从 41 向下</p>
+<p>在第 0 层，51 节点为要查找的节点，节点被找到，共查找 4 次。</p>
+<p>从此可以看出跳跃表比有序链表效率要高</p>
+</blockquote>
+<h1 id="3-Redis-客户端"><a href="#3-Redis-客户端" class="headerlink" title="3.Redis 客户端"></a>3.Redis 客户端</h1><h2 id="3-Java-客户端"><a href="#3-Java-客户端" class="headerlink" title="3.Java 客户端"></a>3.Java 客户端</h2><h3 id="3-1-Jedis-快速入门"><a href="#3-1-Jedis-快速入门" class="headerlink" title="3.1 Jedis 快速入门"></a>3.1 Jedis 快速入门</h3><hr>
+<blockquote>
+<p>该部分参考：<a target="_blank" rel="noopener" href="https://www.oz6.cn/articles/58">https://www.oz6.cn/articles/58</a><br>Jedis 的官网地址： <a target="_blank" rel="noopener" href="https://github.com/redis/jedis%EF%BC%8C%E6%88%91%E4%BB%AC%E5%85%88%E6%9D%A5%E4%B8%AA%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%EF%BC%9A">https://github.com/redis/jedis，我们先来个快速入门：</a></p>
+</blockquote>
+<ul>
+<li><strong>新建一个 Maven 工程并引入以下依赖</strong></li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--引入Jedis依赖--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>redis.clients<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jedis<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>4.2.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-comment">&lt;!--引入单元测试依赖--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.junit.jupiter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>junit-jupiter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.8.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>编写测试类并与 Redis 建立连接</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> Jedis jedis;<br><br><span class="hljs-meta">@BeforeEach</span> <span class="hljs-comment">//被该注解修饰的方法每次执行其他方法前自动执行</span><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">setUp</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-comment">// 1. 获取连接</span><br>    jedis = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Jedis</span>(<span class="hljs-string">&quot;192.168.230.88&quot;</span>,<span class="hljs-number">6379</span>);<br>    <span class="hljs-comment">// 2. 设置密码</span><br>    jedis.auth(<span class="hljs-string">&quot;132537&quot;</span>);<br>    <span class="hljs-comment">// 3. 选择库（默认是下标为0的库）</span><br>    jedis.select(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>编写一个操作数据的方法（这里以操作 String 类型为例）</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testString</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-comment">// 1.往redis中存放一条String类型的数据并获取返回结果</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> jedis.set(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-string">&quot;www.oz6.cn&quot;</span>);<br>    System.out.println(<span class="hljs-string">&quot;result = &quot;</span> + result);<br><br>    <span class="hljs-comment">// 2.从redis中获取一条数据</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> jedis.get(<span class="hljs-string">&quot;url&quot;</span>);<br>    System.out.println(<span class="hljs-string">&quot;url = &quot;</span> + url);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>最后不要忘记编写一个释放资源的方法</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@AfterEach</span> <span class="hljs-comment">//被该注解修饰的方法会在每次执行其他方法后执行</span><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">tearDown</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-comment">// 1.释放资源</span><br>    <span class="hljs-keyword">if</span> (jedis != <span class="hljs-literal">null</span>)&#123;<br>        jedis.close();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>执行</strong><code>**testString()**</code><strong>方法后测试结果如图所示</strong><br><a target="_blank" rel="noopener" href="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525131017888.png#crop=0&crop=0&crop=1&crop=1&id=GGLks&originHeight=201&originWidth=808&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525131017888.png#crop=0&crop=0&crop=1&crop=1&id=GGLks&originHeight=201&originWidth=808&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></li>
+</ul>
+<h3 id="3-2-Jedis-连接池"><a href="#3-2-Jedis-连接池" class="headerlink" title="3.2 Jedis 连接池"></a>3.2 Jedis 连接池</h3><hr>
+<blockquote>
+<p><strong>Jedis 本身是线程不安全的，并且频繁的创建和销毁连接会有性能损耗，因此我们推荐大家使用 Jedis 连接池代替 Jedis 的直连方式</strong></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">JedisConnectionFactory</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> JedisPool jedisPool;<br><br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-comment">//配置连接池</span><br>        <span class="hljs-type">JedisPoolConfig</span> <span class="hljs-variable">jedisPoolConfig</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">JedisPoolConfig</span>();<br>        jedisPoolConfig.setMaxTotal(<span class="hljs-number">8</span>);<br>        jedisPoolConfig.setMaxIdle(<span class="hljs-number">8</span>);<br>        jedisPoolConfig.setMinIdle(<span class="hljs-number">0</span>);<br>        jedisPoolConfig.setMaxWaitMillis(<span class="hljs-number">200</span>);<br>        <span class="hljs-comment">//创建连接池对象</span><br>        jedisPool = <span class="hljs-keyword">new</span> <span class="hljs-title class_">JedisPool</span>(jedisPoolConfig,<span class="hljs-string">&quot;192.168.230.88&quot;</span>,<span class="hljs-number">6379</span>,<span class="hljs-number">1000</span>,<span class="hljs-string">&quot;132537&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Jedis <span class="hljs-title function_">getJedis</span><span class="hljs-params">()</span>&#123;<br>       <span class="hljs-keyword">return</span> jedisPool.getResource();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-SpringDataRedis-介绍"><a href="#3-3-SpringDataRedis-介绍" class="headerlink" title="3.3 SpringDataRedis 介绍"></a>3.3 SpringDataRedis 介绍</h3><hr>
+<blockquote>
+<p><strong>SpringData 是 Spring 中数据操作的模块，包含对各种数据库的集成，其中对 Redis 的集成模块就叫做</strong><code>**SpringDataRedis**</code></p>
+<p><strong>官网地址</strong>：<a target="_blank" rel="noopener" href="https://spring.io/projects/spring-data-redis">https://spring.io/projects/spring-data-redis</a></p>
+</blockquote>
+<ul>
+<li>提供了对不同 Redis 客户端的整合（<code>Lettuce</code> 和 <code>Jedis</code>）</li>
+<li>提供了 <code>RedisTemplate</code> 统一 API 来操作 Redis</li>
+<li>支持 Redis 的发布订阅模型</li>
+<li>支持 Redis 哨兵和 Redis 集群</li>
+<li>支持基于 Lettuce 的响应式编程</li>
+<li>支持基于 JDK、JSON、字符串、Spring 对象的数据序列化及反序列化</li>
+<li>支持基于 Redis 的 JDKCollection 实现</li>
+</ul>
+<blockquote>
+<p><strong>SpringDataRedis 中提供了 RedisTemplate 工具类，其中封装了各种对 Redis 的操作。并且将不同数据类型的操作 API 封装到了不同的类型中：</strong></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525140217446.png#crop=0&crop=0&crop=1&crop=1&id=GkakR&originHeight=364&originWidth=1091&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525140217446.png#crop=0&crop=0&crop=1&crop=1&id=GkakR&originHeight=364&originWidth=1091&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<h3 id="3-4-SpringDataRedis-快速入门"><a href="#3-4-SpringDataRedis-快速入门" class="headerlink" title="3.4 SpringDataRedis 快速入门"></a>3.4 SpringDataRedis 快速入门</h3><hr>
+<blockquote>
+<p><code>**SpringBoot**</code><strong>已经提供了对</strong><code>**SpringDataRedis**</code><strong>的支持，使用非常简单</strong></p>
+</blockquote>
+<ul>
+<li><strong>首先新建一个 Spring Boot 工程</strong><br><a target="_blank" rel="noopener" href="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525141608974.png#crop=0&crop=0&crop=1&crop=1&id=fVBRk&originHeight=594&originWidth=1042&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525141608974.png#crop=0&crop=0&crop=1&crop=1&id=fVBRk&originHeight=594&originWidth=1042&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></li>
+<li><strong>然后引入连接池依赖</strong></li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--连接池依赖--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.commons<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>commons-pool2<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>编写配置文件</strong><code>**application.yml**</code><strong>（连接池的配置在实际开发中是根据需求来的）</strong></li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">redis:</span><br>    <span class="hljs-attr">host:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.230</span><span class="hljs-number">.88</span> <span class="hljs-comment">#指定redis所在的host</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-number">6379</span> <span class="hljs-comment">#指定redis的端口</span><br>    <span class="hljs-attr">password:</span> <span class="hljs-number">132537</span> <span class="hljs-comment">#设置redis密码</span><br>    <span class="hljs-attr">lettuce:</span><br>      <span class="hljs-attr">pool:</span><br>        <span class="hljs-attr">max-active:</span> <span class="hljs-number">8</span> <span class="hljs-comment">#最大连接数</span><br>        <span class="hljs-attr">max-idle:</span> <span class="hljs-number">8</span> <span class="hljs-comment">#最大空闲数</span><br>        <span class="hljs-attr">min-idle:</span> <span class="hljs-number">0</span> <span class="hljs-comment">#最小空闲数</span><br>        <span class="hljs-attr">max-wait:</span> <span class="hljs-string">100ms</span> <span class="hljs-comment">#连接等待时间</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>编写测试类执行测试方法</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootTest</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">RedisDemoApplicationTests</span> &#123;<br><br>	<span class="hljs-meta">@Resource</span><br>	<span class="hljs-keyword">private</span> RedisTemplate redisTemplate;<br><br>	<span class="hljs-meta">@Test</span><br>	<span class="hljs-keyword">void</span> <span class="hljs-title function_">testString</span><span class="hljs-params">()</span> &#123;<br>		<span class="hljs-comment">// 1.通过RedisTemplate获取操作String类型的ValueOperations对象</span><br>		<span class="hljs-type">ValueOperations</span> <span class="hljs-variable">ops</span> <span class="hljs-operator">=</span> redisTemplate.opsForValue();<br>		<span class="hljs-comment">// 2.插入一条数据</span><br>		ops.set(<span class="hljs-string">&quot;blogName&quot;</span>,<span class="hljs-string">&quot;Vz-Blog&quot;</span>);<br><br>		<span class="hljs-comment">// 3.获取数据</span><br>		<span class="hljs-type">String</span> <span class="hljs-variable">blogName</span> <span class="hljs-operator">=</span> (String) ops.get(<span class="hljs-string">&quot;blogName&quot;</span>);<br>		System.out.println(<span class="hljs-string">&quot;blogName = &quot;</span> + blogName);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-5-RedisSerializer-配置"><a href="#3-5-RedisSerializer-配置" class="headerlink" title="3.5 RedisSerializer 配置"></a>3.5 RedisSerializer 配置</h3><hr>
+<blockquote>
+<p><strong>RedisTemplate 可以接收任意 Object 作为值写入 Redis，只不过写入前会把 Object 序列化为字节形式，</strong><code>**默认是采用JDK序列化**</code><strong>，得到的结果是这样的</strong></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525170205272.png#crop=0&crop=0&crop=1&crop=1&id=KXcNr&originHeight=248&originWidth=784&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525170205272.png#crop=0&crop=0&crop=1&crop=1&id=KXcNr&originHeight=248&originWidth=784&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>可读性差</li>
+<li>内存占用较大</li>
+</ul>
+<blockquote>
+<p><strong>那么如何解决以上的问题呢？我们可以通过自定义 RedisTemplate 序列化的方式来解决。</strong></p>
+</blockquote>
+<ul>
+<li><strong>编写一个配置类</strong><code>**RedisConfig**</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RedisConfig</span> &#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> RedisTemplate&lt;String,Object&gt; <span class="hljs-title function_">redisTemplate</span><span class="hljs-params">(RedisConnectionFactory factory)</span>&#123;<br>        <span class="hljs-comment">// 1.创建RedisTemplate对象</span><br>        RedisTemplate&lt;String ,Object&gt; redisTemplate = <span class="hljs-keyword">new</span> <span class="hljs-title class_">RedisTemplate</span>&lt;&gt;();<br>        <span class="hljs-comment">// 2.设置连接工厂</span><br>        redisTemplate.setConnectionFactory(factory);<br><br>        <span class="hljs-comment">// 3.创建序列化对象</span><br>        <span class="hljs-type">StringRedisSerializer</span> <span class="hljs-variable">stringRedisSerializer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringRedisSerializer</span>();<br>        <span class="hljs-type">GenericJackson2JsonRedisSerializer</span> <span class="hljs-variable">genericJackson2JsonRedisSerializer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">GenericJackson2JsonRedisSerializer</span>();<br><br>        <span class="hljs-comment">// 4.设置key和hashKey采用String的序列化方式</span><br>        redisTemplate.setKeySerializer(stringRedisSerializer);<br>        redisTemplate.setHashKeySerializer(stringRedisSerializer);<br><br>        <span class="hljs-comment">// 5.设置value和hashValue采用json的序列化方式</span><br>        redisTemplate.setValueSerializer(genericJackson2JsonRedisSerializer);<br>        redisTemplate.setHashValueSerializer(genericJackson2JsonRedisSerializer);<br><br>        <span class="hljs-keyword">return</span> redisTemplate;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>此时我们已经将 RedisTemplate 的 key 设置为</strong><code>**String序列化**</code><strong>，value 设置为</strong><code>**Json序列化**</code><strong>的方式，再来执行方法测试</strong><br><a target="_blank" rel="noopener" href="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525170925364.png#crop=0&crop=0&crop=1&crop=1&id=yBQO0&originHeight=244&originWidth=785&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525170925364.png#crop=0&crop=0&crop=1&crop=1&id=yBQO0&originHeight=244&originWidth=785&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></li>
+<li><strong>由于我们设置的 value 序列化方式是 Json 的，因此我们可以直接向 redis 中插入一个对象</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">testSaveUser</span><span class="hljs-params">()</span> &#123;<br>    redisTemplate.opsForValue().set(<span class="hljs-string">&quot;user:100&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>(<span class="hljs-string">&quot;Vz&quot;</span>, <span class="hljs-number">21</span>));<br>    <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> (User) redisTemplate.opsForValue().get(<span class="hljs-string">&quot;user:100&quot;</span>);<br>    System.out.println(<span class="hljs-string">&quot;User = &quot;</span> + user);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525171340322.png#crop=0&crop=0&crop=1&crop=1&id=Z7tp9&originHeight=333&originWidth=788&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525171340322.png#crop=0&crop=0&crop=1&crop=1&id=Z7tp9&originHeight=333&originWidth=788&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a><br>尽管 Json 序列化可以满足我们的需求，但是依旧存在一些问题。<br>如上图所示，为了在反序列化时知道对象的类型，JSON 序列化器会将类的 class 类型写入 json 结果中，存入 Redis，会带来额外的内存开销。<br>那么我们如何解决这个问题呢？我们可以通过下文的 <code>StringRedisTemplate</code> 来解决这个问题。</p>
+<h3 id="3-6-StringRedisTemplate"><a href="#3-6-StringRedisTemplate" class="headerlink" title="3.6 StringRedisTemplate"></a>3.6 StringRedisTemplate</h3><hr>
+<blockquote>
+<p><strong>为了节省内存空间，我们并不会使用 JSON 序列化器来处理 value，而是统一使用 String 序列化器，要求只能存储 String 类型的 key 和 value。当需要存储 Java 对象时，手动完成对象的序列化和反序列化。</strong></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525172001057.png#crop=0&crop=0&crop=1&crop=1&id=kmcQH&originHeight=385&originWidth=1161&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525172001057.png#crop=0&crop=0&crop=1&crop=1&id=kmcQH&originHeight=385&originWidth=1161&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<blockquote>
+<p><strong>Spring 默认提供了一个 StringRedisTemplate 类，它的 key 和 value 的序列化方式默认就是 String 方式。省去了我们自定义 RedisTemplate 的过程</strong></p>
+</blockquote>
+<ul>
+<li><strong>我们可以直接编写一个测试类使用 StringRedisTemplate 来执行以下方法</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootTest</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">RedisStringTemplateTest</span> &#123;<br><br>	<span class="hljs-meta">@Resource</span><br>	<span class="hljs-keyword">private</span> StringRedisTemplate stringRedisTemplate;<br><br>	<span class="hljs-meta">@Test</span><br>	<span class="hljs-keyword">void</span> <span class="hljs-title function_">testSaveUser</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> JsonProcessingException &#123;<br>		<span class="hljs-comment">// 1.创建一个Json序列化对象</span><br>		<span class="hljs-type">ObjectMapper</span> <span class="hljs-variable">objectMapper</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectMapper</span>();<br>		<span class="hljs-comment">// 2.将要存入的对象通过Json序列化对象转换为字符串</span><br>		<span class="hljs-type">String</span> <span class="hljs-variable">userJson1</span> <span class="hljs-operator">=</span> objectMapper.writeValueAsString(<span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>(<span class="hljs-string">&quot;Vz&quot;</span>, <span class="hljs-number">21</span>));<br>		<span class="hljs-comment">// 3.通过StringRedisTemplate将数据存入redis</span><br>		stringRedisTemplate.opsForValue().set(<span class="hljs-string">&quot;user:100&quot;</span>,userJson1);<br>		<span class="hljs-comment">// 4.通过key取出value</span><br>		<span class="hljs-type">String</span> <span class="hljs-variable">userJson2</span> <span class="hljs-operator">=</span> stringRedisTemplate.opsForValue().get(<span class="hljs-string">&quot;user:100&quot;</span>);<br>		<span class="hljs-comment">// 5.由于取出的值是String类型的Json字符串，因此我们需要通过Json序列化对象来转换为java对象</span><br>		<span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> objectMapper.readValue(userJson2, User.class);<br>		<span class="hljs-comment">// 6.打印结果</span><br>		System.out.println(<span class="hljs-string">&quot;user = &quot;</span> + user);<br>	&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>执行完毕回到 Redis 的图形化客户端查看结果</strong><br><a target="_blank" rel="noopener" href="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525172508234.png#crop=0&crop=0&crop=1&crop=1&id=AuuKA&originHeight=302&originWidth=786&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/Redis/image-20220525172508234.png#crop=0&crop=0&crop=1&crop=1&id=AuuKA&originHeight=302&originWidth=786&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></li>
+</ul>
+<h3 id="3-7-总结"><a href="#3-7-总结" class="headerlink" title="3.7 总结"></a>3.7 总结</h3><hr>
+<blockquote>
+<p>RedisTemplate 的两种序列化实践方案，两种方案各有各的优缺点，可以根据实际情况选择使用。</p>
+</blockquote>
+<p>方案一：</p>
+<ol>
+<li>自定义 RedisTemplate</li>
+<li>修改 RedisTemplate 的序列化器为 GenericJackson2JsonRedisSerializer</li>
+</ol>
+<p>方案二：</p>
+<ol>
+<li>使用 StringRedisTemplate</li>
+<li>写入 Redis 时，手动把对象序列化为 JSON</li>
+<li>读取 Redis 时，手动把读取到的 JSON 反序列化为对象</li>
+</ol>
+<h1 id="二-Redis-实战"><a href="#二-Redis-实战" class="headerlink" title="二.Redis 实战"></a>二.Redis 实战</h1><h1 id="1-缓存"><a href="#1-缓存" class="headerlink" title="1. 缓存"></a>1. 缓存</h1><h2 id="1-1-为什么用缓存"><a href="#1-1-为什么用缓存" class="headerlink" title="1.1 为什么用缓存"></a>1.1 为什么用缓存</h2><p><strong>速度快，好用</strong></p>
+<p>缓存数据存储于代码中，而代码运行在内存中，<strong>内存的读写性能远高于磁盘</strong> , 缓存可以大大降低<strong>用户访问并发量带来的</strong>服务器读写压力</p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/image-20220523214414123.png#crop=0&crop=0&crop=1&crop=1&id=j0BAi&originHeight=518&originWidth=1341&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/image-20220523214414123.png#crop=0&crop=0&crop=1&crop=1&id=j0BAi&originHeight=518&originWidth=1341&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<h2 id="1-2-缓存模型与思路"><a href="#1-2-缓存模型与思路" class="headerlink" title="1.2 缓存模型与思路"></a>1.2 缓存模型与思路</h2><p>标准的操作方式就是<strong>查询数据库之前先查询缓存</strong>，如果缓存数据存在，则直接从缓存中返回，如果缓存数据不存在，再查询数据库，然后将数据存入 redis。</p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653322097736.png#crop=0&crop=0&crop=1&crop=1&id=PZRHb&originHeight=768&originWidth=1514&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653322097736.png#crop=0&crop=0&crop=1&crop=1&id=PZRHb&originHeight=768&originWidth=1514&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<p>代码如下：</p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653322190155.png#crop=0&crop=0&crop=1&crop=1&id=MGHyo&originHeight=768&originWidth=1063&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653322190155.png#crop=0&crop=0&crop=1&crop=1&id=MGHyo&originHeight=768&originWidth=1063&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<h2 id="1-3-缓存更新策略"><a href="#1-3-缓存更新策略" class="headerlink" title="1.3 缓存更新策略"></a>1.3 缓存更新策略</h2><p>缓存更新是 redis 为了节约内存而设计出来的一个东西，主要是因为内存数据宝贵，当我们向 redis 插入太多数据，此时就可能会导致缓存中的数据过多，所以 redis 会对部分数据进行更新，或者把他叫为淘汰更合适。</p>
+<ul>
+<li><strong>内存淘汰</strong>：当 redis 内存达到我们设置的阈值（max-memery）时，自动触发淘汰机制。</li>
+<li><strong>超时剔除</strong>：给数据添加 TTL 时间，到时间自动剔除。</li>
+<li><strong>主动更新</strong>：我们可以手动调用方法把缓存删掉，<strong>通常用于解决缓存和数据库不一致问题</strong></li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653322506393.png#crop=0&crop=0&crop=1&crop=1&id=Ku1Ww&originHeight=729&originWidth=1564&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653322506393.png#crop=0&crop=0&crop=1&crop=1&id=Ku1Ww&originHeight=729&originWidth=1564&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<h3 id="1-3-1-缓存与数据库数据不一致解决方案及选择"><a href="#1-3-1-缓存与数据库数据不一致解决方案及选择" class="headerlink" title="1.3.1 缓存与数据库数据不一致解决方案及选择"></a>1.3.1 缓存与数据库数据不一致解决方案及选择</h3><p><strong>缓存中的数据是来自于数据库</strong>的，但是<strong>数据库的数据是会改变</strong>的，如果<strong>数据库数据改变，缓存的数据没有改变</strong>，就会<strong>导致一致性问题</strong>，就会导致用户使用的是过时的数据，影响用户体验，有如下三种解决方案：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cache Aside Pattern ✔</td>
+<td>人工编码方式：缓存调用者在更新完数据库后再去更新缓存，也称之为<strong>双写方案</strong></td>
+</tr>
+<tr>
+<td>Read&#x2F;Write Through Pattern</td>
+<td>由系统本身完成，数据库与缓存的问题交由系统本身去处理</td>
+</tr>
+<tr>
+<td>Write Behind Caching Pattern</td>
+<td>调用者只操作缓存，其他线程去异步处理数据库，实现最终一致</td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653322857620.png#crop=0&crop=0&crop=1&crop=1&id=aTszM&originHeight=550&originWidth=1547&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653322857620.png#crop=0&crop=0&crop=1&crop=1&id=aTszM&originHeight=550&originWidth=1547&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<p>这里综合考虑我们选择<strong>方案一！</strong>✔</p>
+<p>操作缓存和数据库时有三个问题需要考虑：</p>
+<p>如果采用第一个方案，那么假设我们每次操作数据库后，都操作缓存，但是中间如果没有人查询，那么这个更新动作实际上只有最后一次生效，中间的更新动作意义并不大，我们可以<strong>把缓存删除，等待再次查询时，将缓存中的数据加载出来</strong></p>
+<ul>
+<li>删除缓存还是更新缓存？<ul>
+<li>更新缓存：每次更新数据库都更新缓存，无效写操作较多</li>
+<li>删除缓存：更新数据库时让缓存失效，查询时再更新缓存 ✔</li>
+</ul>
+</li>
+<li>如何保证缓存与数据库的操作的同时成功或失败？<ul>
+<li>单体系统，将缓存与数据库操作放在一个事务</li>
+<li>分布式系统，利用 TCC 等分布式事务方案</li>
+</ul>
+</li>
+</ul>
+<p>应该具体操作缓存还是操作数据库，我们应当是<strong>先操作数据库，再删除缓存</strong>，原因在于，如果你选择第一种方案，在两个线程并发来访问时，假设线程 1 先来，他先把缓存删了，此时线程 2 过来，他查询缓存数据并不存在，此时他写入缓存，当他写入缓存后，线程 1 再执行更新动作时，实际上写入的就是旧的数据，新的数据被旧数据覆盖了。</p>
+<ul>
+<li>先操作缓存还是先操作数据库？<ul>
+<li>先删除缓存，再操作数据库</li>
+<li>先操作数据库，再删除缓存 ✔</li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653323595206.png#crop=0&crop=0&crop=1&crop=1&id=yOh5J&originHeight=804&originWidth=1466&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653323595206.png#crop=0&crop=0&crop=1&crop=1&id=yOh5J&originHeight=804&originWidth=1466&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<h2 id="1-4-缓存穿透"><a href="#1-4-缓存穿透" class="headerlink" title="1.4 缓存穿透"></a>1.4 缓存穿透</h2><p>缓存穿透 ：缓存穿透是指客户端请求的<strong>数据在缓存中和数据库中都不存在</strong>，这样缓存永远不会生效，这些请求都会打到数据库。</p>
+<p>解决方案：</p>
+<ul>
+<li>缓存空对象<ul>
+<li>优点：实现简单，维护方便</li>
+<li>缺点：<ul>
+<li>额外的内存消耗</li>
+<li>可能造成短期的不一致</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>布隆过滤<ul>
+<li>优点：内存占用较少，没有多余 key</li>
+<li>缺点：<ul>
+<li>实现复杂</li>
+<li>存在误判可能（布隆过滤器走的是哈希思想，只要哈希思想，就可能存在哈希冲突）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653326156516.png#crop=0&crop=0&crop=1&crop=1&id=piznd&originHeight=569&originWidth=1012&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653326156516.png#crop=0&crop=0&crop=1&crop=1&id=piznd&originHeight=569&originWidth=1012&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<p>编码思路：</p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653327124561.png#crop=0&crop=0&crop=1&crop=1&id=FrhB4&originHeight=682&originWidth=1570&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653327124561.png#crop=0&crop=0&crop=1&crop=1&id=FrhB4&originHeight=682&originWidth=1570&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<p><strong>小总结：</strong></p>
+<p><strong>缓存穿透产生的原因是什么？</strong></p>
+<ul>
+<li>用户请求的数据在缓存中和数据库中都不存在，不断发起这样的请求，给数据库带来巨大压力</li>
+</ul>
+<p><strong>缓存穿透的解决方案有哪些？</strong></p>
+<ul>
+<li>缓存 null 值</li>
+<li>布隆过滤</li>
+<li>增强 id 的复杂度，避免被猜测 id 规律</li>
+<li>做好数据的基础格式校验</li>
+<li>加强用户权限校验</li>
+<li>做好热点参数的限流</li>
+<li>进行实时监控：当发现 Redis 的命中率开始急速降低，需要排查访问对象和访问的数据，和运维人员配合，可以设置黑名单限制服务</li>
+<li>设置可访问的名单（白名单）：使用 bitmaps 类型定义一个可以访问的名单，名单 id 作为 bitmaps 的偏移量，每次访问和 bitmap 里面的 id 进行比较，如果访问 id 不在 bitmaps 里面，进行拦截，不允许访问。</li>
+</ul>
+<h2 id="1-5-缓存击穿"><a href="#1-5-缓存击穿" class="headerlink" title="1.5 缓存击穿"></a>1.5 缓存击穿</h2><p>缓存击穿问题也叫<strong>热点 Key 问题</strong>，就是<strong>一个</strong>被高并发访问并且缓存重建业务较复杂的 <strong>key 突然失效了</strong>，无数的请求访问会在瞬间给数据库带来巨大的冲击。</p>
+<p>常见的解决方案有两种：</p>
+<ul>
+<li><strong>预先设置热门数据：</strong>把一些热门数据提前存入到 redis 里面，加大这些热门数据 key 的时长</li>
+<li><strong>互斥锁</strong></li>
+<li><strong>逻辑过期</strong></li>
+</ul>
+<p>逻辑分析：当多个线程过来查询缓存，发现都没有命中，于是乎都去查数据库，然后数据库就压力山大，直接爆炸。</p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653328022622.png#crop=0&crop=0&crop=1&crop=1&id=vfUs1&originHeight=600&originWidth=1008&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653328022622.png#crop=0&crop=0&crop=1&crop=1&id=vfUs1&originHeight=600&originWidth=1008&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<h3 id="1-5-1-互斥锁解决缓存击穿"><a href="#1-5-1-互斥锁解决缓存击穿" class="headerlink" title="1.5.1 互斥锁解决缓存击穿"></a>1.5.1 互斥锁解决缓存击穿</h3><p>可以利用锁来防止多个线程同时去查询数据库，写缓存，<strong>只有拿到互斥锁的线程才能去查询数据库写缓存操作</strong>，其他线程拿不到互斥锁就休眠重试，等缓存中写入了之后，自然就能拿到数据。</p>
+<p>加锁会影响查询的性能，因为此时会让查询的性能从并行变成了串行，我们可以采用 tryLock 方法 + double check 来解决这样的问题。</p>
+<p>这里的互斥锁<strong>通过 setnx 的特性可以实现</strong>，setnx 只有在不存在数据时才能添加，有数据时添加失败。</p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653328288627.png#crop=0&crop=0&crop=1&crop=1&id=WCiKj&originHeight=723&originWidth=569&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653328288627.png#crop=0&crop=0&crop=1&crop=1&id=WCiKj&originHeight=723&originWidth=569&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<h3 id="1-5-2-逻辑过期解决缓存击穿"><a href="#1-5-2-逻辑过期解决缓存击穿" class="headerlink" title="1.5.2 逻辑过期解决缓存击穿"></a>1.5.2 逻辑过期解决缓存击穿</h3><p>之所以会发生缓存击穿，是因为我们设置的 key 有过期时间，那么我们可以不给 key 设置过期时间啊，那这就有人会问，这不是会一直占用内存吗？，所以我们可以采用逻辑过期时间，<strong>把过期时间写入 value 中</strong>，用代码逻辑来判断该 key 是否过期。</p>
+<p>这种方案巧妙在于，<strong>异步的构建缓存</strong>，缺点在于在构建完缓存之前，返回的都是脏数据。</p>
+<h3 id="1-5-3-两种方案的对比"><a href="#1-5-3-两种方案的对比" class="headerlink" title="1.5.3 两种方案的对比"></a>1.5.3 两种方案的对比</h3><p><strong>互斥锁方案：</strong>由于保证了互斥性，所以数据一致，且实现简单，因为仅仅只需要加一把锁而已，也没其他的事情需要操心，所以没有额外的内存消耗，缺点在于有锁就有死锁问题的发生，且只能串行执行性能肯定受到影响</p>
+<p><strong>逻辑过期方案：</strong> 线程读取过程中不需要等待，性能好，有一个额外的线程持有锁去进行重构数据，但是在重构数据完成前，其他的线程只能返回之前的数据，且实现起来麻烦</p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653357522914.png#crop=0&crop=0&crop=1&crop=1&id=rY3Mr&originHeight=425&originWidth=1044&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653357522914.png#crop=0&crop=0&crop=1&crop=1&id=rY3Mr&originHeight=425&originWidth=1044&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<h3 id="1-5-4-业务代码实现"><a href="#1-5-4-业务代码实现" class="headerlink" title="1.5.4 业务代码实现"></a>1.5.4 业务代码实现</h3><p><strong>互斥锁方案：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653357860001.png#crop=0&crop=0&crop=1&crop=1&id=v24cc&originHeight=735&originWidth=1068&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653357860001.png#crop=0&crop=0&crop=1&crop=1&id=v24cc&originHeight=735&originWidth=1068&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<p><strong>逻辑过期方案：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653360308731.png#crop=0&crop=0&crop=1&crop=1&id=mYsYE&originHeight=617&originWidth=1179&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653360308731.png#crop=0&crop=0&crop=1&crop=1&id=mYsYE&originHeight=617&originWidth=1179&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<h2 id="1-6-缓存雪崩"><a href="#1-6-缓存雪崩" class="headerlink" title="1.6 缓存雪崩"></a>1.6 缓存雪崩</h2><p>缓存雪崩是指在同一时段<strong>大量的缓存 key 同时失效</strong>或者 Redis 服务宕机，导致大量请求到达数据库，带来巨大压力。</p>
+<p>解决方案：</p>
+<ul>
+<li>给不同的 Key 的 TTL 添加随机值</li>
+<li>利用 Redis 集群提高服务的可用性</li>
+<li>给缓存业务添加降级限流策略</li>
+<li>给业务添加多级缓存：nginx 缓存 + redis 缓存 + 其他缓存（ehcache 等）</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653327884526.png#crop=0&crop=0&crop=1&crop=1&id=QxIJM&originHeight=560&originWidth=1030&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653327884526.png#crop=0&crop=0&crop=1&crop=1&id=QxIJM&originHeight=560&originWidth=1030&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<h1 id="2-分布式锁"><a href="#2-分布式锁" class="headerlink" title="2. 分布式锁"></a>2. 分布式锁</h1><h2 id="2-1-基本原理和实现方式对比"><a href="#2-1-基本原理和实现方式对比" class="headerlink" title="2.1 基本原理和实现方式对比"></a>2.1 基本原理和实现方式对比</h2><p>分布式锁：满足分布式系统或集群模式下<strong>多进程可见</strong>并且互斥的锁。</p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653374296906.png#crop=0&crop=0&crop=1&crop=1&id=t9UWo&originHeight=808&originWidth=1616&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653374296906.png#crop=0&crop=0&crop=1&crop=1&id=t9UWo&originHeight=808&originWidth=1616&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<p>分布式锁必须满足的条件：</p>
+<ul>
+<li>可见性：<strong>多个线程都能看到相同的结果，</strong>注意：这个地方说的可见性并不是并发编程中指的内存可见性，只是说多个进程之间都能感知到变化的意思</li>
+<li><strong>互斥：互斥是分布式锁的最基本的条件，使得程序串行执行</strong></li>
+<li>高可用：程序不易崩溃，时时刻刻都保证较高的可用性</li>
+<li>高性能：由于加锁本身就让性能降低，所有对于分布式锁本身需要他就较高的加锁性能和释放锁性能</li>
+<li>安全性：安全也是程序中必不可少的一环</li>
+</ul>
+<p>常见的三种分布式锁以及对比：</p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653382219377.png#crop=0&crop=0&crop=1&crop=1&id=bSkqZ&originHeight=538&originWidth=1497&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653382219377.png#crop=0&crop=0&crop=1&crop=1&id=bSkqZ&originHeight=538&originWidth=1497&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<h2 id="2-2-Redis-实现分布式锁"><a href="#2-2-Redis-实现分布式锁" class="headerlink" title="2.2 Redis 实现分布式锁"></a>2.2 Redis 实现分布式锁</h2><p>实现分布式锁时需要实现的两个基本方法：</p>
+<ul>
+<li>获取锁：<ul>
+<li>互斥：确保只能有一个线程获取锁</li>
+<li>非阻塞：尝试一次，成功返回 true，失败返回 false</li>
+</ul>
+</li>
+<li>释放锁：<ul>
+<li>手动释放（del key）</li>
+<li><strong>超时释放：获取锁时添加一个超时时间</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-1-核心思路"><a href="#2-2-1-核心思路" class="headerlink" title="2.2.1 核心思路"></a>2.2.1 核心思路</h3><p>利用 setnx 的特性：只有当 key 不存在时才可以设置成功，来实现分布式锁的互斥性，释放锁即把这个 key 删除即可。</p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653382830810.png#crop=0&crop=0&crop=1&crop=1&id=ADgwh&originHeight=664&originWidth=629&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653382830810.png#crop=0&crop=0&crop=1&crop=1&id=ADgwh&originHeight=664&originWidth=629&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<h3 id="2-2-2-实现分布式锁版本一"><a href="#2-2-2-实现分布式锁版本一" class="headerlink" title="2.2.2 实现分布式锁版本一"></a>2.2.2 实现分布式锁版本一</h3><p>Ilock 接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">ILock</span> &#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 尝试获取锁</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> timeoutSec 锁持有的超时时间，过期后自动释放</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> true代表获取锁成功; false代表获取锁失败</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">tryLock</span><span class="hljs-params">(<span class="hljs-type">long</span> timeoutSec)</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 释放锁</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">unlock</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>实现类 <strong>SimpleRedisLock</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String KEY_PREFIX=<span class="hljs-string">&quot;lock:&quot;</span><br><span class="hljs-comment">//获取锁逻辑</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">tryLock</span><span class="hljs-params">(<span class="hljs-type">long</span> timeoutSec)</span> &#123;<br>    <span class="hljs-comment">// 获取线程标示</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">threadId</span> <span class="hljs-operator">=</span> Thread.currentThread().getId()<br>    <span class="hljs-comment">// 获取锁</span><br>    <span class="hljs-type">Boolean</span> <span class="hljs-variable">success</span> <span class="hljs-operator">=</span> stringRedisTemplate.opsForValue()<br>            .setIfAbsent(KEY_PREFIX + name, threadId + <span class="hljs-string">&quot;&quot;</span>, timeoutSec, TimeUnit.SECONDS);<br>    <span class="hljs-keyword">return</span> Boolean.TRUE.equals(success);<br>&#125;<br><br><span class="hljs-comment">//释放锁逻辑</span><br> <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">unlock</span><span class="hljs-params">()</span> &#123;    <br>     <span class="hljs-comment">//通过del删除锁    </span><br>     stringRedisTemplate.delete(KEY_PREFIX + name);<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-3-实现分布式锁版本二"><a href="#2-2-3-实现分布式锁版本二" class="headerlink" title="2.2.3 实现分布式锁版本二"></a>2.2.3 实现分布式锁版本二</h3><p>版本一面临的问题：因为<strong>线程可能阻塞导致锁超时自动释放</strong>，在释放锁时有可能<strong>释放的是别人的锁</strong></p>
+<p>解决方案：在释放锁的时候先判断该锁是不是自己的锁，是自己的锁才释放，不是自己的锁不释放。</p>
+<p>核心逻辑：在存入锁时，<strong>放入自己线程的标识（UUID）</strong>，在删除锁时，<strong>判断当前这把锁的标识是不是自己存入的</strong>，如果是，则进行删除，如果不是，则不进行删除。</p>
+<p>具体代码修改：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//在value上拼接UUID作为唯一标识</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">ID_PREFIX</span> <span class="hljs-operator">=</span> UUID.randomUUID().toString(<span class="hljs-literal">true</span>) + <span class="hljs-string">&quot;-&quot;</span>;<br><span class="hljs-comment">//加锁逻辑</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">tryLock</span><span class="hljs-params">(<span class="hljs-type">long</span> timeoutSec)</span> &#123;<br>   <span class="hljs-comment">// 获取线程标示</span><br>   <span class="hljs-type">String</span> <span class="hljs-variable">threadId</span> <span class="hljs-operator">=</span> ID_PREFIX + Thread.currentThread().getId();<br>   <span class="hljs-comment">// 获取锁</span><br>   <span class="hljs-type">Boolean</span> <span class="hljs-variable">success</span> <span class="hljs-operator">=</span> stringRedisTemplate.opsForValue()<br>                .setIfAbsent(KEY_PREFIX + name, threadId, timeoutSec, TimeUnit.SECONDS);<br>   <span class="hljs-keyword">return</span> Boolean.TRUE.equals(success);<br>&#125;<br><br><span class="hljs-comment">//释放锁逻辑</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">unlock</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 获取线程标示</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">threadId</span> <span class="hljs-operator">=</span> ID_PREFIX + Thread.currentThread().getId();<br>    <span class="hljs-comment">// 获取锁中的标示</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">id</span> <span class="hljs-operator">=</span> stringRedisTemplate.opsForValue().get(KEY_PREFIX + name);<br>    <span class="hljs-comment">// 判断标示是否一致</span><br>    <span class="hljs-keyword">if</span>(threadId.equals(id)) &#123;<br>        <span class="hljs-comment">// 释放锁</span><br>        stringRedisTemplate.delete(KEY_PREFIX + name);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>有关代码实操说明：</strong></p>
+<p>在我们修改完此处代码后，我们重启工程，然后启动两个线程，第一个线程持有锁后，手动释放锁，第二个线程 此时进入到锁内部，再放行第一个线程，此时第一个线程由于锁的 value 值并非是自己，所以不能释放锁，也就无法删除别人的锁，此时第二个线程能够正确释放锁，通过这个案例初步说明我们解决了锁误删的问题。</p>
+<h3 id="2-2-4-实现分布式锁版本三"><a href="#2-2-4-实现分布式锁版本三" class="headerlink" title="2.2.4 实现分布式锁版本三"></a>2.2.4 实现分布式锁版本三</h3><p>考虑更加极端的情况：在删除锁的时候，已经判断成功唯一标识一致准备释放锁，在这之间进行了阻塞（JVM Full GC），那么仍然会导致误删的情况。</p>
+<p>解决方案：让<strong>判断标志和释放锁两个动作具有原子性</strong>，保证一起进行中间不能停。</p>
+<p><a target="_blank" rel="noopener" href="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653387764938.png#crop=0&crop=0&crop=1&crop=1&id=mDrv1&originHeight=697&originWidth=1611&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="><img src="https://niumapicgo.oss-cn-beijing.aliyuncs.com/images/1653387764938.png#crop=0&crop=0&crop=1&crop=1&id=mDrv1&originHeight=697&originWidth=1611&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<p>利用 lua 脚本来解决多条命令的原子性问题：这里不做讨论，我不会</p>
+<p><strong>unlock.lua</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java">lua<br>-- 比较线程标示与锁中的标示是否一致<br><span class="hljs-keyword">if</span>(redis.call(<span class="hljs-string">&#x27;get&#x27;</span>, KEYS[<span class="hljs-number">1</span>]) ==  ARGV[<span class="hljs-number">1</span>]) then<br>    -- 释放锁 del key<br>    <span class="hljs-keyword">return</span> redis.call(<span class="hljs-string">&#x27;del&#x27;</span>, KEYS[<span class="hljs-number">1</span>])<br>end<br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> DefaultRedisScript&lt;Long&gt; UNLOCK_SCRIPT;<br>    <span class="hljs-keyword">static</span> &#123;<br>        UNLOCK_SCRIPT = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DefaultRedisScript</span>&lt;&gt;();<br>        UNLOCK_SCRIPT.setLocation(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassPathResource</span>(<span class="hljs-string">&quot;unlock.lua&quot;</span>));<br>        UNLOCK_SCRIPT.setResultType(Long.class);<br>    &#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">unlock</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 调用lua脚本</span><br>    stringRedisTemplate.execute(<br>            UNLOCK_SCRIPT,<br>            Collections.singletonList(KEY_PREFIX + name),<br>            ID_PREFIX + Thread.currentThread().getId());<br>&#125;<br><span class="hljs-comment">//经过以上代码改造后，我们就能够实现 拿锁比锁删锁的原子性动作了~</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-5-小总结"><a href="#2-2-5-小总结" class="headerlink" title="2.2.5 小总结"></a>2.2.5 小总结</h3><p>基于 Redis 的分布式锁实现思路：</p>
+<ul>
+<li>利用 set nx ex 获取锁，并设置过期时间，保存线程标示</li>
+<li>释放锁时先判断线程标示是否与自己一致，一致则删除锁<ul>
+<li>特性：<ul>
+<li>利用 set nx 满足互斥性</li>
+<li>利用 set ex 保证故障时锁依然能释放，避免死锁，提高安全性</li>
+<li>利用 Redis 集群保证高可用和高并发特性</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>我们一路走来，利用<strong>添加过期时间，防止死锁问题的发生</strong>，但是有了过期时间之后，可能<strong>出现误删别人锁的问题</strong>，这个问题我们开始是利用删之前 通过拿锁，比锁，删锁这个逻辑来解决的，也就是<strong>删之前判断一下当前这把锁是否是属于自己的</strong>，但是现在还有<strong>原子性问题</strong>，也就是我们没法保证拿锁比锁删锁是一个原子性的动作，最后<strong>通过 lua 表达式来解决这个问题</strong></p>
+<p>但是目前还剩下一个问题，锁不住，什么是锁不住呢，你想一想，如果当过期时间到了之后，我们可以给他续期一下，比如续个 30s，就好像是网吧上网， 网费到了之后，然后说，来，网管，再给我来 10 块的，是不是后边的问题都不会发生了，那么<strong>续期问题</strong>怎么解决呢，可以依赖于我们接下来要学习 redission 啦</p>
+<h2 id="2-3-Redission"><a href="#2-3-Redission" class="headerlink" title="2.3 Redission"></a>2.3 Redission</h2><p><a target="_blank" rel="noopener" href="https://dogbin.vip/coderbin/3e609eef.html#">Redission 的 github</a><br><a target="_blank" rel="noopener" href="https://redisson.org/">Redisson 官网</a></p>
+<h3 id="2-3-1-setnx-实现的分布式锁的问题"><a href="#2-3-1-setnx-实现的分布式锁的问题" class="headerlink" title="2.3.1 setnx 实现的分布式锁的问题"></a>2.3.1 setnx 实现的分布式锁的问题</h3><ul>
+<li><strong>重入问题</strong>：重入问题是指 <strong>获得锁的线程可以再次进入到相同的锁的代码块中</strong>，可重入锁的意义在于<strong>防止死锁</strong>，比如 HashTable 这样的代码中，他的方法都是使用 synchronized 修饰的，假如他在一个方法内，调用另一个方法，那么此时如果是不可重入的，不就死锁了吗？所以可重入锁他的主要意义是防止死锁，我们的 synchronized 和 Lock 锁都是可重入的。</li>
+<li><strong>不可重试</strong>：是指目前的分布式只能尝试一次，我们认为合理的情况是：<strong>当线程在获得锁失败后，他应该能再次尝试获得锁。</strong></li>
+<li><strong>超时释放：</strong>我们在加锁时增加了过期时间，这样的我们可以防止死锁，但是如果卡顿的时间超长，虽然我们采用了 lua 表达式防止删锁的时候，误删别人的锁，但是毕竟没有锁住，有安全隐患</li>
+<li><strong>主从一致性：</strong> 如果 Redis 提供了主从集群，当我们向集群写数据时，主机需要异步的将数据同步给从机，而万一在同步过去之前，主机宕机了，就会出现死锁问题。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://cdn.nlark.com/yuque/0/2022/png/27782283/1659345998950-c7f8773e-78f2-43ba-bc56-25ecb5f43c8a.png#clientId=u44ccdc61-7dd1-4&crop=0&crop=0&crop=1&crop=1&from=paste&id=ub63ddc72&name=image.png&originHeight=621&originWidth=1541&originalType=url&ratio=1&rotation=0&showTitle=false&size=216476&status=done&style=none&taskId=u36ae097d-d6ff-4e4f-9066-2f5ec76cc8b&title="><img src="https://cdn.nlark.com/yuque/0/2022/png/27782283/1659345998950-c7f8773e-78f2-43ba-bc56-25ecb5f43c8a.png#clientId=u44ccdc61-7dd1-4&crop=0&crop=0&crop=1&crop=1&from=paste&id=ub63ddc72&name=image.png&originHeight=621&originWidth=1541&originalType=url&ratio=1&rotation=0&showTitle=false&size=216476&status=done&style=none&taskId=u36ae097d-d6ff-4e4f-9066-2f5ec76cc8b&title=" srcset="/img/loading.gif" lazyload alt="image.png"></a></p>
+<h3 id="2-3-2-Redission-是什么"><a href="#2-3-2-Redission-是什么" class="headerlink" title="2.3.2 Redission 是什么"></a>2.3.2 Redission 是什么</h3><p>Redisson 是一个在 Redis 的基础上实现的 Java 驻内存数据网格（In-Memory Data Grid）。它不仅提供了一系列的分布式的 Java 常用对象，还提供了许多分布式服务，其中就包含了各种分布式锁的实现。<br><a target="_blank" rel="noopener" href="https://cdn.nlark.com/yuque/0/2022/png/27782283/1659345998831-8647441b-a1a7-4c50-8899-cb5709292636.png#clientId=u44ccdc61-7dd1-4&crop=0&crop=0&crop=1&crop=1&from=paste&id=u59e61eee&name=image.png&originHeight=402&originWidth=920&originalType=url&ratio=1&rotation=0&showTitle=false&size=50016&status=done&style=none&taskId=u5ad8fc26-4843-49a7-860c-c901451f0fc&title="><img src="https://cdn.nlark.com/yuque/0/2022/png/27782283/1659345998831-8647441b-a1a7-4c50-8899-cb5709292636.png#clientId=u44ccdc61-7dd1-4&crop=0&crop=0&crop=1&crop=1&from=paste&id=u59e61eee&name=image.png&originHeight=402&originWidth=920&originalType=url&ratio=1&rotation=0&showTitle=false&size=50016&status=done&style=none&taskId=u5ad8fc26-4843-49a7-860c-c901451f0fc&title=" srcset="/img/loading.gif" lazyload alt="image.png"></a></p>
+<h3 id="2-3-3-Redission-可重入锁原理"><a href="#2-3-3-Redission-可重入锁原理" class="headerlink" title="2.3.3 Redission 可重入锁原理"></a>2.3.3 Redission 可重入锁原理</h3><p>就是将原本 string 类型的 value 转换成了 hash 类型，hash 对应的 field 是线程名，value 则是一个计数器，<strong>当前线程每获取一次锁，则 value 加一，删除锁 value 减一</strong>，若 value 等于零则 del 锁。利用 lua 脚本实现。<br><a target="_blank" rel="noopener" href="https://cdn.nlark.com/yuque/0/2022/png/27782283/1659345999367-e24b3edb-aa66-437a-bff3-506a5d87c562.png#clientId=u44ccdc61-7dd1-4&crop=0&crop=0&crop=1&crop=1&from=paste&id=ueb5da414&name=image.png&originHeight=720&originWidth=1655&originalType=url&ratio=1&rotation=0&showTitle=false&size=489648&status=done&style=none&taskId=ucd83c961-f943-4df8-a75f-b5f6abe5427&title="><img src="https://cdn.nlark.com/yuque/0/2022/png/27782283/1659345999367-e24b3edb-aa66-437a-bff3-506a5d87c562.png#clientId=u44ccdc61-7dd1-4&crop=0&crop=0&crop=1&crop=1&from=paste&id=ueb5da414&name=image.png&originHeight=720&originWidth=1655&originalType=url&ratio=1&rotation=0&showTitle=false&size=489648&status=done&style=none&taskId=ucd83c961-f943-4df8-a75f-b5f6abe5427&title=" srcset="/img/loading.gif" lazyload alt="image.png"></a></p>
+<h3 id="2-3-4-Redission-锁重试和-WatchDog-机制"><a href="#2-3-4-Redission-锁重试和-WatchDog-机制" class="headerlink" title="2.3.4 Redission 锁重试和 WatchDog 机制"></a>2.3.4 Redission 锁重试和 WatchDog 机制</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1cr4y1671t?p=67&vd_source=665476c062292b64fa2949e9c935b109">实战篇 - 20. 分布式锁 - Redisson 的锁重试和 WatchDog 机制哔哩哔哩 bilibili</a></p>
+<h3 id="2-3-5-Redission-锁的-MutiLock-原理"><a href="#2-3-5-Redission-锁的-MutiLock-原理" class="headerlink" title="2.3.5 Redission 锁的 MutiLock 原理"></a>2.3.5 Redission 锁的 MutiLock 原理</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1cr4y1671t?p=68&vd_source=665476c062292b64fa2949e9c935b109">实战篇 - 21. 分布式锁 - Redisson 的 multiLock 原理哔哩哔哩 bilibili</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Redis/" class="category-chain-item">Redis</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Redis 基础实战</div>
+      <div>http://blog.hrseno.cn/2024/12/20/Redis-Redis 基础实战/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>黄浩森</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/12/26/Redis-Redis%20%E7%9A%84%20Java%20%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="Redis 的 Java 客户端">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Redis 的 Java 客户端</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/10/MyBatis-Plus%E7%9A%84%E4%BD%BF%E7%94%A8/" title="MyBatis-Plus的使用">
+                        <span class="hidden-mobile">MyBatis-Plus的使用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"2ZJLuVCJ4Q2bXyP9EqSOQYYT-gzGzoHsz","appKey":"i3Wntqs2wnX4YpCjFU4FHPVJ","path":"window.location.pathname","placeholder":"欢迎交流！匿名昵称留空即可，已开启邮箱留言自动通知提醒","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>Horsen</span> <i class="iconfont icon-love"></i> <span>&copy; 2025</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

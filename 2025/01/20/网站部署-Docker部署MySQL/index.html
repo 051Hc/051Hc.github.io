@@ -22,22 +22,22 @@
     <meta name="description" content="1.编写好dockerfile文件 123456789101112131415#指定基础镜像FROM mysql:latest#设置初始环境变量ENV MYSQL_ROOT_PASSWORD&#x3D;123456ENV MYSQL_DATABASE&#x3D;database#用于将初始化脚本 init.sql 复制到 MySQL 容器的 &#x2F;docker-entrypoint-initdb.d&#x2F; 目录中。当 #My">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker部署MySQL并实现远程连接">
-<meta property="og:url" content="http://hrseno.cn/2025/01/20/%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2-Docker%E9%83%A8%E7%BD%B2MySQL/index.html">
-<meta property="og:site_name" content="Website">
+<meta property="og:url" content="http://blog.hrseno.cn/2025/01/20/%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2-Docker%E9%83%A8%E7%BD%B2MySQL/index.html">
+<meta property="og:site_name" content="Horsen&#39;s Blog">
 <meta property="og:description" content="1.编写好dockerfile文件 123456789101112131415#指定基础镜像FROM mysql:latest#设置初始环境变量ENV MYSQL_ROOT_PASSWORD&#x3D;123456ENV MYSQL_DATABASE&#x3D;database#用于将初始化脚本 init.sql 复制到 MySQL 容器的 &#x2F;docker-entrypoint-initdb.d&#x2F; 目录中。当 #My">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://hrseno.cn/img/articles/17.png">
+<meta property="og:image" content="http://blog.hrseno.cn/img/articles/17.png">
 <meta property="article:published_time" content="2025-01-20T14:25:02.448Z">
 <meta property="article:modified_time" content="2025-01-20T17:26:13.171Z">
 <meta property="article:author" content="黄浩森">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://hrseno.cn/img/articles/17.png">
+<meta name="twitter:image" content="http://blog.hrseno.cn/img/articles/17.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Docker部署MySQL并实现远程连接 - Website</title>
+  <title>Docker部署MySQL并实现远程连接 - Horsen&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -75,7 +75,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"hrseno.cn","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"blog.hrseno.cn","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -101,7 +101,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Website</strong>
+      <strong>Horsen&#39;s Blog</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -393,7 +393,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Docker部署MySQL并实现远程连接</div>
-      <div>http://hrseno.cn/2025/01/20/网站部署-Docker部署MySQL/</div>
+      <div>http://blog.hrseno.cn/2025/01/20/网站部署-Docker部署MySQL/</div>
     </div>
     <div class="license-meta">
       
@@ -447,8 +447,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/29/%E5%AE%89%E5%8D%93%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%A1%8C%E9%80%9A%E7%94%A8%E9%85%8D%E7%BD%AE/" title="运行安卓项目通用配置（java）">
-                        <span class="hidden-mobile">运行安卓项目通用配置（java）</span>
+                      <a href="/2025/01/20/Docker-Docker%20%E5%9F%BA%E7%A1%80%E7%AF%87/" title="Docker 基础篇">
+                        <span class="hidden-mobile">Docker 基础篇</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -582,7 +582,7 @@
     <div class="footer-inner">
   
     <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Horsen</span></a> <i class="iconfont icon-love"></i> 
+       <span>Horsen</span> <i class="iconfont icon-love"></i> <span>&copy; 2025</span> 
     </div>
   
   
