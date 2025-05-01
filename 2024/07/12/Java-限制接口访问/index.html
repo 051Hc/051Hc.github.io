@@ -19,25 +19,25 @@
   <meta name="author" content="黄浩森">
   <meta name="keywords" content="">
   
-    <meta name="description" content="MyBatis-Plus的使用数据库基本设计完毕，创建完数据库后就需要让后端连接数据库。在这里用MyBatis-Plus的代码生成器能快速生成entity,mapper,service等文件。 操作步骤第一步，添加依赖在pom.xml文件中的dependencies里添加如下几行代码： 12345678910111213141516xml&lt;dependency&gt;    &lt;grou">
+    <meta name="description" content="接口访问限制实现目的限制用户在一定时间内只能访问接口的次数。 后端限制方法原理1.通过 Redis 记录请求次数，如果超过限制则拒绝访问。同时设置 Redis 的 key 的时效性，过期自动销毁。 2.使用限流器 自定义注解（Java）123456789101112131415161718192021&#x2F;** * 请求限制的自定义注解 * * @Target 注解可修饰的对象范围： *">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MyBatis-Plus的使用">
-<meta property="og:url" content="http://blog.hrseno.cn/2024/12/10/MyBatis-Plus%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:title" content="Java限制接口访问">
+<meta property="og:url" content="http://blog.hrseno.cn/2024/07/12/Java-%E9%99%90%E5%88%B6%E6%8E%A5%E5%8F%A3%E8%AE%BF%E9%97%AE/index.html">
 <meta property="og:site_name" content="Horsen&#39;s Blog">
-<meta property="og:description" content="MyBatis-Plus的使用数据库基本设计完毕，创建完数据库后就需要让后端连接数据库。在这里用MyBatis-Plus的代码生成器能快速生成entity,mapper,service等文件。 操作步骤第一步，添加依赖在pom.xml文件中的dependencies里添加如下几行代码： 12345678910111213141516xml&lt;dependency&gt;    &lt;grou">
+<meta property="og:description" content="接口访问限制实现目的限制用户在一定时间内只能访问接口的次数。 后端限制方法原理1.通过 Redis 记录请求次数，如果超过限制则拒绝访问。同时设置 Redis 的 key 的时效性，过期自动销毁。 2.使用限流器 自定义注解（Java）123456789101112131415161718192021&#x2F;** * 请求限制的自定义注解 * * @Target 注解可修饰的对象范围： *">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://blog.hrseno.cn/img/articles/25.png">
-<meta property="article:published_time" content="2024-12-10T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-04-24T14:23:21.857Z">
+<meta property="og:image" content="http://blog.hrseno.cn/img/articles/12.png">
+<meta property="article:published_time" content="2024-07-12T05:50:00.000Z">
+<meta property="article:modified_time" content="2025-05-01T16:51:56.536Z">
 <meta property="article:author" content="黄浩森">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://blog.hrseno.cn/img/articles/25.png">
+<meta name="twitter:image" content="http://blog.hrseno.cn/img/articles/12.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>MyBatis-Plus的使用 - Horsen&#39;s Blog</title>
+  <title>Java限制接口访问 - Horsen&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="MyBatis-Plus的使用"></span>
+            <span id="subtitle" data-typed-text="Java限制接口访问"></span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-10 12:00" pubdate>
-          2024年12月10日 中午
+        <time datetime="2024-07-12 13:50" pubdate>
+          2024年7月12日 下午
         </time>
       </span>
     
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          753 字
+          474 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          8 分钟
+          5 分钟
         
       </span>
     
@@ -274,34 +274,22 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">MyBatis-Plus的使用</h1>
+            <h1 id="seo-header">Java限制接口访问</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="MyBatis-Plus的使用"><a href="#MyBatis-Plus的使用" class="headerlink" title="MyBatis-Plus的使用"></a>MyBatis-Plus的使用</h1><p>数据库基本设计完毕，创建完数据库后就需要让后端连接数据库。在这里用<code>MyBatis-Plus</code>的代码生成器能快速生成<code>entity</code>,<code>mapper</code>,<code>service</code>等文件。</p>
-<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="第一步，添加依赖"><a href="#第一步，添加依赖" class="headerlink" title="第一步，添加依赖"></a>第一步，添加依赖</h3><p>在<code>pom.xml</code>文件中的<code>dependencies</code>里添加如下几行代码：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs xml">xml<br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.baomidou<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mybatis-plus-spring-boot3-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.5.9<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.baomidou<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mybatis-plus-generator<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.5.9<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.freemarker<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>freemarker<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.3.31<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+                <h1 id="接口访问限制实现"><a href="#接口访问限制实现" class="headerlink" title="接口访问限制实现"></a>接口访问限制实现</h1><h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>限制用户在一定时间内只能访问接口的次数。</p>
+<h2 id="后端限制方法"><a href="#后端限制方法" class="headerlink" title="后端限制方法"></a>后端限制方法</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>1.通过 Redis 记录请求次数，如果超过限制则拒绝访问。同时设置 Redis 的 key 的时效性，过期自动销毁。</p>
+<p>2.使用限流器</p>
+<h3 id="自定义注解（Java）"><a href="#自定义注解（Java）" class="headerlink" title="自定义注解（Java）"></a>自定义注解（Java）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 请求限制的自定义注解</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@Target</span> 注解可修饰的对象范围：</span><br><span class="hljs-comment"> *         - ElementType.METHOD: 作用于方法</span><br><span class="hljs-comment"> *         - ElementType.TYPE: 作用于类</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@Retention</span> 定义注解的生命周期：</span><br><span class="hljs-comment"> *         - RetentionPolicy.RUNTIME: 在运行时有效</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@Inherited</span> 表示注解可被继承</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Documented</span><br><span class="hljs-meta">@Inherited</span><br><span class="hljs-meta">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="hljs-meta">@Target(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> AccessLimit &#123;<br>    <span class="hljs-comment">// 失效时间（秒）</span><br>    <span class="hljs-type">int</span> <span class="hljs-title function_">seconds</span><span class="hljs-params">()</span>;<br><br>    <span class="hljs-comment">// 最大请求次数</span><br>    <span class="hljs-type">int</span> <span class="hljs-title function_">maxCount</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>现在我用的是最新的版本，如有问题请去<a target="_blank" rel="noopener" href="https://baomidou.com/">官网</a>查看是否有更新。其中<code>freemarker</code>是我要使用的模版引擎。</p>
-<h3 id="第二步-后端连接数据库"><a href="#第二步-后端连接数据库" class="headerlink" title="第二步 后端连接数据库"></a>第二步 后端连接数据库</h3><p>在<code>application.properties</code>下写明你要连接的数据库的详细信息，我用的是<code>mysql5.7</code>。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs routeros">properties<br>spring.datasource.<span class="hljs-attribute">driver-class-name</span>=com.mysql.cj.jdbc.Driver<br>spring.datasource.<span class="hljs-attribute">url</span>=jdbc:mysql://localhost:3306/&quot;yourDatabaseName&quot;<br>spring.datasource.<span class="hljs-attribute">username</span>=<span class="hljs-string">&quot;yourSqlUsername(maybe root)&quot;</span><br>spring.datasource.<span class="hljs-attribute">password</span>=<span class="hljs-string">&quot;yourSqlPassword&quot;</span><br>mybatis-plus.<span class="hljs-attribute">mapper-locations</span>=classpath:xml/*.xml<br>mybatis-plus.configuration.<span class="hljs-attribute">log-impl</span>=org.apache.ibatis.logging.stdout.StdOutImpl<br></code></pre></td></tr></table></figure>
+<h3 id="配置拦截器（Java）"><a href="#配置拦截器（Java）" class="headerlink" title="配置拦截器（Java）"></a>配置拦截器（Java）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LimitInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">HandlerInterceptor</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">Logger</span> <span class="hljs-variable">logger</span> <span class="hljs-operator">=</span> LoggerFactory.getLogger(LimitInterceptor.class);<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> RedisCache redisCache;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-keyword">if</span> (handler <span class="hljs-keyword">instanceof</span> HandlerMethod) &#123;<br>            <span class="hljs-type">HandlerMethod</span> <span class="hljs-variable">hm</span> <span class="hljs-operator">=</span> (HandlerMethod) handler;<br>            <span class="hljs-type">AccessLimit</span> <span class="hljs-variable">accessLimit</span> <span class="hljs-operator">=</span> hm.getMethodAnnotation(AccessLimit.class);<br>            <span class="hljs-keyword">if</span> (accessLimit == <span class="hljs-literal">null</span>) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            &#125;<br><br>            <span class="hljs-type">int</span> <span class="hljs-variable">seconds</span> <span class="hljs-operator">=</span> accessLimit.seconds(); <span class="hljs-comment">// 失效时间（秒）</span><br>            <span class="hljs-type">int</span> <span class="hljs-variable">maxCount</span> <span class="hljs-operator">=</span> accessLimit.maxCount(); <span class="hljs-comment">// 最大请求次数</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">key</span> <span class="hljs-operator">=</span> request.getServletPath() + request.getSession().getId();<br><br>            <span class="hljs-type">Integer</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>            <span class="hljs-keyword">if</span> (redisCache.getCacheObject(key) != <span class="hljs-literal">null</span>) &#123;<br>                count = (Integer) redisCache.getCacheObject(key);<br>            &#125;<br><br>            <span class="hljs-keyword">if</span> (count == <span class="hljs-number">0</span>) &#123;<br>                <span class="hljs-comment">// 第一次访问</span><br>                redisCache.setCacheObject(key, <span class="hljs-number">1</span>);<br>                redisCache.expire(key, seconds, TimeUnit.SECONDS); <span class="hljs-comment">// 设置缓存失效时间</span><br>                logger.info(<span class="hljs-string">&quot;&#123;&#125; 第一次访问&quot;</span>, key);<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (count &lt; maxCount) &#123;<br>                <span class="hljs-comment">// 增加访问次数</span><br>                redisCache.incr(key, <span class="hljs-number">1</span>);<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-comment">// 超出访问次数</span><br>                logger.error(<span class="hljs-string">&quot;超出访问次数&quot;</span>);<br>                render(response, <span class="hljs-string">&quot;请求次数过于频繁！&quot;</span>);<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 封装返回值</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> response 响应对象</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> msg      返回消息</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> Exception 异常</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">render</span><span class="hljs-params">(HttpServletResponse response, String msg)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        response.setContentType(<span class="hljs-string">&quot;application/json;charset=utf-8&quot;</span>);<br>        <span class="hljs-type">PrintWriter</span> <span class="hljs-variable">out</span> <span class="hljs-operator">=</span> response.getWriter();<br>        out.print(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectMapper</span>().writeValueAsString(RespBean.error(msg)));<br>        out.flush();<br>        out.close();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>请将双引号的地方换上你自己要使用的。其中最后一句话是为了之后在终端打印出代码执行的sql语句。</p>
-<h3 id="第三步-编写代码生成器代码"><a href="#第三步-编写代码生成器代码" class="headerlink" title="第三步 编写代码生成器代码"></a>第三步 编写代码生成器代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.horsen.myproject;<br><br><span class="hljs-keyword">import</span> com.baomidou.mybatisplus.generator.FastAutoGenerator;<br><span class="hljs-keyword">import</span> com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;<br><br><span class="hljs-keyword">import</span> java.nio.file.Paths;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CodeGenerator</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">tables</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;users,roles,xxx,xxx&quot;</span>;<br>        FastAutoGenerator.create(<span class="hljs-string">&quot;jdbc:mysql://localhost:3306/yourDatabaseName&quot;</span>,<span class="hljs-string">&quot;username&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>)<br>                .globalConfig(builder -&gt; builder<br>                        .author(<span class="hljs-string">&quot;horsen&quot;</span>)<br>                        .outputDir(Paths.get(System.getProperty(<span class="hljs-string">&quot;user.dir&quot;</span>))+<span class="hljs-string">&quot;/src/main/java&quot;</span>)<br>                        .commentDate(<span class="hljs-string">&quot;yyyy-MM-dd&quot;</span>)<br>                )<br>                .packageConfig(builder -&gt; builder<br>                        .parent(<span class="hljs-string">&quot;com.airomance.easytravelroute&quot;</span>)<br>                        .entity(<span class="hljs-string">&quot;entity&quot;</span>)<br>                        .mapper(<span class="hljs-string">&quot;mapper&quot;</span>)<br>                        .service(<span class="hljs-string">&quot;service&quot;</span>)<br>                        .serviceImpl(<span class="hljs-string">&quot;service.impl&quot;</span>)<br>                        .xml(<span class="hljs-string">&quot;mapper.xml&quot;</span>)<br>                )<br>                .strategyConfig(builder -&gt; builder<br>                        .addInclude(tables.split(<span class="hljs-string">&quot;,&quot;</span>))<br>                        .entityBuilder()<br>                        .enableLombok()<br>                        .enableFileOverride()<br>                        .controllerBuilder()<br>                        .enableRestStyle()<br>                )<br>                .templateEngine(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FreemarkerTemplateEngine</span>())<br>                .execute();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="注册拦截器（Java）"><a href="#注册拦截器（Java）" class="headerlink" title="注册拦截器（Java）"></a>注册拦截器（Java）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">WebMvcConfigurer</span> &#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> LimitInterceptor <span class="hljs-title function_">limitHandlerInterceptor</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">LimitInterceptor</span>();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addInterceptors</span><span class="hljs-params">(InterceptorRegistry registry)</span> &#123;<br>        registry.addInterceptor(limitHandlerInterceptor());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>请将数据库涉及的数据库名称，用户名，密码换成自己的。还有包名。</p>
-<h3 id="第四步-运行代码生成器-也可以直接用MyBatis-X插件生成"><a href="#第四步-运行代码生成器-也可以直接用MyBatis-X插件生成" class="headerlink" title="第四步 运行代码生成器(也可以直接用MyBatis-X插件生成)"></a>第四步 运行代码生成器(也可以直接用MyBatis-X插件生成)</h3><p>运行代码后应该会自动创建出<code>entity</code>,<code>mapper</code>,<code>service</code>，<code>controller</code>层等文件。这时需要把mapper文件夹下的xml文件夹移动到项目的<code>resources</code>文件夹下，这样方便配置也是一般的使用习惯。</p>
-<p>注意，这里xml必须移动，原因在第二步已经设置了xml文件夹的路径，就是这句配置：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">mybatis-<span class="hljs-keyword">plus</span>.mapper-locations=<span class="hljs-keyword">classpath</span>:xml<span class="hljs-comment">/*.xml</span><br></code></pre></td></tr></table></figure>
+<h3 id="在-Controller-的接口加上注解（Java）"><a href="#在-Controller-的接口加上注解（Java）" class="headerlink" title="在 Controller 的接口加上注解（Java）"></a>在 Controller 的接口加上注解（Java）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping(&quot;/&quot;)</span><br><span class="hljs-meta">@AccessLimit(seconds = 6, maxCount = 1)</span> <span class="hljs-comment">// 用户重复访问该接口必须间隔 6 秒及以上</span><br><span class="hljs-keyword">public</span> RespBean <span class="hljs-title function_">addEmp</span><span class="hljs-params">(<span class="hljs-meta">@RequestBody</span> Employee employee)</span> &#123;<br>    <span class="hljs-keyword">if</span> (employeeService.addEmp(employee)) &#123;<br>        <span class="hljs-keyword">return</span> RespBean.ok(<span class="hljs-string">&quot;添加成功!&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> RespBean.error(<span class="hljs-string">&quot;添加失败！&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h3 id="第五步-设置mapper路径"><a href="#第五步-设置mapper路径" class="headerlink" title="第五步 设置mapper路径"></a>第五步 设置mapper路径</h3><p>我们需要将mapper文件夹的路径告诉Spring boot，在启动项目的<code>application</code>文件下添加一个注解。</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@MapperScan(<span class="hljs-string">&quot;com.horsen.myproject.mapper&quot;</span>)</span><br></code></pre></td></tr></table></figure>
-
-<p>添加后这个文件代码应该是这样的：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.horsen.myproject;<br><br><span class="hljs-keyword">import</span> org.mybatis.spring.annotation.MapperScan;<br><span class="hljs-keyword">import</span> org.springframework.boot.SpringApplication;<br><span class="hljs-keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;<br><br><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-meta">@MapperScan(&quot;com.horsen.myproject.mapper&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Application</span> &#123;<br><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>		SpringApplication.run(Application.class, args);<br>	&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h2><p>至此应该能够正常运行项目，然后进行接口的详细编写了。</p>
 
                 
               </div>
@@ -320,7 +308,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/MyBatis/" class="category-chain-item">MyBatis</a>
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
   
   
 
@@ -340,8 +328,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>MyBatis-Plus的使用</div>
-      <div>http://blog.hrseno.cn/2024/12/10/MyBatis-Plus的使用/</div>
+      <div>Java限制接口访问</div>
+      <div>http://blog.hrseno.cn/2024/07/12/Java-限制接口访问/</div>
     </div>
     <div class="license-meta">
       
@@ -353,7 +341,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月10日</div>
+          <div>2024年7月12日</div>
         </div>
       
       
@@ -385,9 +373,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/18/Redis-%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8Fsession/" title="Redis 实现 Session 共享">
+                      <a href="/2024/07/18/Linux%E7%AC%94%E8%AE%B0/" title="Linux笔记">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Redis 实现 Session 共享</span>
+                        <span class="hidden-mobile">Linux笔记</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -395,8 +383,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/07/%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2-JDK%E5%AE%89%E8%A3%85/" title="Linux服务器JDK安装和环境变量配置">
-                        <span class="hidden-mobile">Linux服务器JDK安装和环境变量配置</span>
+                      <a href="/2024/06/20/%E5%BE%AE%E6%9C%8D%E5%8A%A1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="什么是微服务？">
+                        <span class="hidden-mobile">什么是微服务？</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

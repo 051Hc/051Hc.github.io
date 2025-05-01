@@ -22,13 +22,13 @@
     <meta name="description" content="在 springBoot 中，注解是编码时必不可少的，它可以帮助我们更方便快捷的去开发。常见的注解如：@Autowired、@Slf4j、@Data 等等。 然而这些注解都是别人已经封装好给我们用的，如果我们想自定义一个拥有特别功能的注解，该怎么操作呢？ 看完这篇文章，给你答案～ 今天以日志功能为例，灵活的运用自定义注解方便快捷的记录每个接口的日志。 在项目中，有众多的接口，如果接口报错了，该怎么">
 <meta property="og:type" content="article">
 <meta property="og:title" content="实现自定义注解">
-<meta property="og:url" content="http://blog.hrseno.cn/2025/01/23/Java-%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3/index.html">
+<meta property="og:url" content="http://blog.hrseno.cn/2024/03/15/Java-%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Horsen&#39;s Blog">
 <meta property="og:description" content="在 springBoot 中，注解是编码时必不可少的，它可以帮助我们更方便快捷的去开发。常见的注解如：@Autowired、@Slf4j、@Data 等等。 然而这些注解都是别人已经封装好给我们用的，如果我们想自定义一个拥有特别功能的注解，该怎么操作呢？ 看完这篇文章，给你答案～ 今天以日志功能为例，灵活的运用自定义注解方便快捷的记录每个接口的日志。 在项目中，有众多的接口，如果接口报错了，该怎么">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://blog.hrseno.cn/img/articles/12.png">
-<meta property="article:published_time" content="2025-01-23T05:50:00.000Z">
-<meta property="article:modified_time" content="2025-04-24T15:32:10.094Z">
+<meta property="article:published_time" content="2024-03-15T05:50:00.000Z">
+<meta property="article:modified_time" content="2025-04-26T16:09:20.421Z">
 <meta property="article:author" content="黄浩森">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://blog.hrseno.cn/img/articles/12.png">
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-01-23 13:50" pubdate>
-          2025年1月23日 下午
+        <time datetime="2024-03-15 13:50" pubdate>
+          2024年3月15日 下午
         </time>
       </span>
     
@@ -290,13 +290,13 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Mycontroller</span> &#123;<br>    <span class="hljs-meta">@GetMapping(&quot;/get&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">get</span><span class="hljs-params">(String name,<span class="hljs-type">int</span> age)</span>&#123;<br>        log.info(<span class="hljs-string">&quot;Mycontroller**********get********start&quot;</span>);<br>        System.out.println(<span class="hljs-string">&quot;执行了get方法&quot;</span>);<br>        log.info(<span class="hljs-string">&quot;Mycontroller**********get********end&quot;</span>);<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>执行结果：</p>
-<p><img src="https://img.pidanxia.ink/image202403182011121.png" srcset="/img/loading.gif" lazyload alt="image-20240314170511437"></p>
+<p>   <img src="/img/articles/self/1.png" srcset="/img/loading.gif" lazyload> </p>
 <p>方法的首尾两行都会有一个日志输出，把这个方法的所有运行包在了日志里面，如果个方法出现了问题，就很容易定位到这里了。</p>
 <p>比如我故意写一个报错：<code>int i = 2/0;</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(&quot;/get&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">get</span><span class="hljs-params">(String name,<span class="hljs-type">int</span> age)</span>&#123;<br>    log.info(<span class="hljs-string">&quot;Mycontroller**********get********start&quot;</span>);<br>    <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">2</span>/<span class="hljs-number">0</span>;<br>    System.out.println(<span class="hljs-string">&quot;执行了get方法&quot;</span>);<br>    log.info(<span class="hljs-string">&quot;Mycontroller**********get********end&quot;</span>);<br>    <span class="hljs-keyword">return</span> name;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>那么输出结果如下：</p>
-<p><img src="https://img.pidanxia.ink/image202403182011123.png" srcset="/img/loading.gif" lazyload alt="image-20240314170557176"></p>
+<p>   <img src="/img/articles/self/2.png" srcset="/img/loading.gif" lazyload> </p>
 <p>可以看到报错的上一行日志定位了 <code>get</code> 方法。我们只需在 <code>get</code> 方法里面找问题就好了。</p>
 <p>每个方法的首尾都要这样写一个日志记录，代码就会<strong>大量冗余</strong>。想获取入参的话，还得再写一段代码来实现，并且根据每个方法的入参数量、类型的不同，可能代码也要相应的变动。</p>
 <p>既然这个是重复性的工作，而且逻辑上都是：<strong>在方法开始之前和方法结束之后做一个标记</strong>。那么我们能不能把这一部分抽取出来，只写一次代码，就能作用在每一个方法上面呢？</p>
@@ -374,7 +374,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@LogInfo</span><br><span class="hljs-meta">@GetMapping(&quot;/get&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">get</span><span class="hljs-params">(String name,<span class="hljs-type">int</span> age)</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;执行了get方法&quot;</span>);<br>    <span class="hljs-keyword">return</span> name;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>执行结果如下：</p>
-<p><img src="https://img.pidanxia.ink/image202403182011124.png" srcset="/img/loading.gif" lazyload alt="image-20240314175830504"></p>
+<p><img src="/img/articles/self/3.png" srcset="/img/loading.gif" lazyload> </p>
 <p>即使我们没有在接口方法中写任何的日志逻辑，只要标记了注解，就会自动调用注解方法！</p>
 <h3 id="整合成-Around-注解"><a href="#整合成-Around-注解" class="headerlink" title="整合成 @Around 注解"></a>整合成 <code>@Around</code> 注解</h3><p>有了之前，有了之后，还会有一个包围的注解！</p>
 <p>上面的 <code>@Before</code> 和 <code>@After</code> 可以合并为一个注解：<code>@Around</code></p>
@@ -386,7 +386,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Around(&quot;@annotation(LogInfo)&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">logAround</span><span class="hljs-params">(ProceedingJoinPoint joinPoint)</span> <span class="hljs-keyword">throws</span> Throwable&#123;<br> <br>    ……  <span class="hljs-comment">//这里代表logBefore方法的代码，一模一样拷贝过来即可</span><br> <br>    <span class="hljs-comment">// 执行原方法</span><br>    <span class="hljs-type">Object</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> joinPoint.proceed();<br> <br>    <span class="hljs-comment">// 在方法执行后记录日志</span><br>    log.info(className + <span class="hljs-string">&quot;****************&quot;</span> + methodName + <span class="hljs-string">&quot;****************end&quot;</span>);<br> <br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>然后再来请求一下接口，看看控制台输出：</p>
-<p><img src="https://img.pidanxia.ink/image202403182011125.png" srcset="/img/loading.gif" lazyload alt="image-20240314182424697"></p>
+<p>   <img src="/img/articles/self/4.png" srcset="/img/loading.gif" lazyload> </p>
 <p>可以看到效果是跟之前的。</p>
 
                 
@@ -427,7 +427,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>实现自定义注解</div>
-      <div>http://blog.hrseno.cn/2025/01/23/Java-实现自定义注解/</div>
+      <div>http://blog.hrseno.cn/2024/03/15/Java-实现自定义注解/</div>
     </div>
     <div class="license-meta">
       
@@ -439,7 +439,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年1月23日</div>
+          <div>2024年3月15日</div>
         </div>
       
       
@@ -471,15 +471,15 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2024/03/20/Java-Java8%E6%96%B0%E7%89%B9%E6%80%A7/" title="Java8新特性">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java8新特性</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2025/01/21/Docker%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90%E9%85%8D%E7%BD%AE/" title="Docker国内镜像源配置">
-                        <span class="hidden-mobile">Docker国内镜像源配置</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>
